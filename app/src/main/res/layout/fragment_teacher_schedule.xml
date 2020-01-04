@@ -7,12 +7,11 @@
     android:background="@color/whiteCardColor"
     android:orientation="vertical">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_teacher_schedule"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Teacher fragment schedule"
-        android:textSize="50dp">
+        android:layout_height="match_parent">
 
-    </TextView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

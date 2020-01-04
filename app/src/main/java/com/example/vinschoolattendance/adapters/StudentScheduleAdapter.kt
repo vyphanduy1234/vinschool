@@ -30,7 +30,7 @@ class StudentScheduleAdapter(var listSchedule: MutableList<StudentSchedule>,var 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentScheduleViewHolder {
         val layoutInflater = LayoutInflater.from(context)
-        var view = layoutInflater.inflate(R.layout.layout_student_schedule,parent,false)
+        var view = layoutInflater.inflate(R.layout.item_student_schedule,parent,false)
         return StudentScheduleViewHolder(view)
     }
 
