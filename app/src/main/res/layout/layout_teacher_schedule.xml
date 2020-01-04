@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="180dp"
     android:background="@drawable/schedule_roundcornor_background"
     android:orientation="horizontal"
     android:weightSum="10">
@@ -132,13 +132,22 @@
                 android:background="@drawable/side_border_background">
 
                 <TextView
-                    android:id="@+id/tv_subject"
+                    android:id="@+id/tv_class"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_weight="6"
-                    android:text="Physic class"
+                    android:text="Class: 12A10"
                     android:textColor="#268ed4"
                     android:textSize="25sp">
+
+                </TextView>
+                <TextView
+                    android:id="@+id/tv_subject_room"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_below="@id/tv_class"
+                    android:text="Physic / 312"
+                    android:textColor="#4263f5"
+                    android:textSize="20dp">
 
                 </TextView>
 
@@ -146,8 +155,7 @@
                     android:id="@+id/tv_time_last"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/tv_subject"
-                    android:layout_weight="6"
+                    android:layout_below="@id/tv_subject_room"
                     android:text="1 Hour 30 Minutes"
                     android:textColor="#999192"
                     android:textSize="15sp">

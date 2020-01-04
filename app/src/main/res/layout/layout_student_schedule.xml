@@ -121,8 +121,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:weightSum="10"
-            >
+            android:weightSum="10">
 
             <RelativeLayout
                 android:layout_width="0dp"
@@ -155,26 +154,42 @@
                 </TextView>
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_attendance_status"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
                 android:layout_weight="4"
-                android:text="skip yesterday"
-                android:textColor="#c9242f">
+                android:orientation="vertical"
+                android:weightSum="2">
 
-            </TextView>
+                <TextView
+                    android:id="@+id/tv_attendance_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="skip yesterday"
+                    android:textColor="#c9242f">
+
+                </TextView>
+
+                <Button
+                    android:id="@+id/btn_student_take_attend"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:text="Take"
+                    android:textSize="10sp"></Button>
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:background="@drawable/buttom_border_background"
             android:orientation="vertical"
-            android:weightSum="10"
-            android:background="@drawable/buttom_border_background">
+            android:weightSum="10">
 
             <TextView
                 android:layout_width="match_parent"
