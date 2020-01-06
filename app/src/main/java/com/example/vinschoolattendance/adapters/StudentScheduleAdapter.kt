@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.appsnipp.creativelogindesigns.model.StudentSchedule
 import com.example.vinschoolattendance.R
+import com.example.vinschoolattendance.views.StudentTakeAttendanceActivity
 import com.example.vinschoolattendance.views.TeacherTakeAttendanceActivity
 
 class StudentScheduleAdapter(var listSchedule: MutableList<StudentSchedule>,var context: Context)
@@ -46,7 +47,7 @@ class StudentScheduleAdapter(var listSchedule: MutableList<StudentSchedule>,var 
         holder.textTimeAT.text = studentSchedule.timeAT
         holder.textSubject.text = studentSchedule.subject
         holder.btnTake.setOnClickListener {
-            val intent: Intent = Intent(context,TeacherTakeAttendanceActivity::class.java)
+            val intent: Intent = Intent(context,StudentTakeAttendanceActivity::class.java)
             context.startActivity(intent)
         }
 

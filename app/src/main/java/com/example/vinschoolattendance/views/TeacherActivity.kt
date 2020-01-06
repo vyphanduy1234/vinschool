@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.example.vinschoolattendance.views.TeacherAddSchedule
 import com.example.vinschoolattendance.views.TeacherProfileFragment
 import com.example.vinschoolattendance.views.TeacherScheduleFragment
 
@@ -13,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_teacher.*
 class TeacherActivity : AppCompatActivity() {
     private val PROFILE: String = "profile"
     private val SCHEDULE: String = "schedule"
+    private val ADD_SCHEDULE: String = "add_schedule"
     private var fragment: Fragment? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +38,10 @@ class TeacherActivity : AppCompatActivity() {
                     setTabNavigation(fragmentManager, SCHEDULE)
                     Log.d("vy","schedule_teacher")
                 }
+                R.id.yt_add_schedule -> {
+                    setTabNavigation(fragmentManager, ADD_SCHEDULE)
+                    Log.d("vy","schedule_teacher")
+                }
             }
         }
     }
@@ -51,6 +57,12 @@ class TeacherActivity : AppCompatActivity() {
             }
             SCHEDULE -> {
                 fragment = TeacherScheduleFragment()
+                fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, fragment!!)
+                    .commit()
+            }
+            ADD_SCHEDULE -> {
+                fragment = TeacherAddSchedule()
                 fragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, fragment!!)
                     .commit()

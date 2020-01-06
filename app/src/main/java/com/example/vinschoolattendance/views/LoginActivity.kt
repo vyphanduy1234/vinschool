@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.vinschoolattendance.R
+import com.example.vinschoolattendance.repositories.StudentScheduleRepo
 import com.example.vinschoolattendance.viewmodels.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.layout_login.*
@@ -48,6 +49,9 @@ class LoginActivity : AppCompatActivity() {
         btn_register.setOnClickListener {
 
         }
+
+        val studentScheduleRepo = StudentScheduleRepo()
+        studentScheduleRepo.getStudentSchedule()
 
     }
 }

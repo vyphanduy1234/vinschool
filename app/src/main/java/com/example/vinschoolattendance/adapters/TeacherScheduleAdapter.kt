@@ -39,10 +39,12 @@ class TeacherScheduleAdapter(var listSchedule: MutableList<TeacherSchedule>,var 
         holder.textTimeMinute.text = teacherSchedule.timeMinute
         holder.textTimeAT.text = teacherSchedule.timeAT
         holder.textClass.text = teacherSchedule.cclass
+        // teacher take attendance
         holder.btnTake.setOnClickListener {
             val intent = Intent(context,TeacherTakeAttendanceActivity::class.java)
             context.startActivity(intent)
         }
+        // teacher edit attendance
         holder.btnEdit.setOnClickListener {
             val intent = Intent(context,TeacherEditStudentAttendance::class.java)
             context.startActivity(intent)

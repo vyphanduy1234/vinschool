@@ -6,37 +6,101 @@
     android:layout_height="match_parent"
     tools:context=".views.TeacherTakeAttendanceActivity">
 
-    <EditText
-        android:id="@+id/edt_text"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="edittext"
-        android:textSize="40sp"
-        android:gravity="center"></EditText>
-    <Button
-        android:id="@+id/btn_generate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="generate"
-        android:layout_below="@+id/edt_text"
-        android:layout_alignParentLeft="true"></Button>
-    <Button
-        android:id="@+id/btn_scan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="scan"
-        android:layout_below="@+id/edt_text"
-        android:layout_alignParentRight="true">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/img_qr"
+        android:orientation="vertical"
+        android:weightSum="5">
 
-    </Button>
+        <TextView
+            android:id="@+id/tv_class"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="Class : 12A1"
+            android:textSize="35sp"></TextView>
+
+        <TextView
+            android:id="@+id/tv_subject"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="Subject : Physic"
+            android:textSize="35sp"></TextView>
+
+        <TextView
+            android:id="@+id/tv_room"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="Room : 314"
+            android:textSize="35sp"></TextView>
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="date : 1/1/2020"
+            android:textSize="35sp"></TextView>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+    <Button
+        android:id="@+id/btn_take"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:text="Take"
+        android:layout_marginLeft="50dp"></Button>
+    <Button
+        android:id="@+id/btn_check_attend"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:text="check attendance"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="50dp"
+        android:enabled="false"></Button>
+</RelativeLayout>
+
+    </LinearLayout>
+
+
     <ImageView
+        android:id="@+id/img_qr"
         android:layout_width="170dp"
         android:layout_height="170dp"
-        android:id="@+id/img_qr"
-        android:layout_below="@id/btn_generate"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        ></ImageView>
-
+        android:layout_marginTop="25dp"
+        android:layout_centerInParent="true"></ImageView>
+    <TextView
+        android:id="@+id/tv_time_notify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Prepare your phone"
+        android:textSize="30sp"
+        android:layout_marginTop="20dp"
+        android:textColor="#DB0C0C"
+        android:layout_below="@id/img_qr"></TextView>
+    <TextView
+        android:id="@+id/tv_timer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="00"
+        android:textSize="30sp"
+        android:layout_marginTop="20dp"
+        android:textColor="#DB0C0C"
+        android:layout_below="@id/tv_time_notify"
+        android:visibility="gone"></TextView>
 
 </RelativeLayout>

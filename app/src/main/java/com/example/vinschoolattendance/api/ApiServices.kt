@@ -1,12 +1,15 @@
 package com.appsnipp.creativelogindesigns.api
 
+import com.appsnipp.creativelogindesigns.model.StudentSchedule
 import com.appsnipp.creativelogindesigns.model.User
 import retrofit2.Call
+import retrofit2.http.Field
 import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiServices{
     
-    @get:GET("")
-    val login: Call<User?>?
-
+    @GET("/api/student/schedule/{sid}")
+    fun getStudentSchedule(@Path("sid") sid: String): Call<StudentSchedule>
     }

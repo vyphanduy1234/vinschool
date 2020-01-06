@@ -1,12 +1,15 @@
 package com.appsnipp.creativelogindesigns.model
 
 import com.example.vinschoolattendance.models.FriendAttend
+import com.google.gson.annotations.SerializedName
 
 class StudentSchedule {
+    @SerializedName("")
     var timeHour: String
     var timeMinute: String
     var timeAT: String
     var isAttend: Boolean
+    @SerializedName("subject")
     var subject: String
     var subjectTime: String
     var friendAttends: List<FriendAttend>
