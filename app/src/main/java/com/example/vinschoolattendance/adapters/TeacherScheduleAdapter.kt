@@ -10,11 +10,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vinschoolattendance.R
-import com.example.vinschoolattendance.models.TeacherSchedule
+import com.example.vinschoolattendance.models.models.TeacherSchedule
 import com.example.vinschoolattendance.views.TeacherEditStudentAttendance
 import com.example.vinschoolattendance.views.TeacherTakeAttendanceActivity
 
-class TeacherScheduleAdapter(var listSchedule: MutableList<TeacherSchedule>,var context: Context)
+class TeacherScheduleAdapter(var listSchedule: MutableList<TeacherSchedule>, var context: Context)
     : RecyclerView.Adapter<TeacherScheduleAdapter.TeacherScheduleViewHolder>()
 {
 

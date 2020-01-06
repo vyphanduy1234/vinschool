@@ -162,12 +162,12 @@
                 android:weightSum="2">
 
                 <TextView
-                    android:id="@+id/tv_attendance_status"
+                    android:id="@+id/tv_class"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:text="skip yesterday"
+                    android:text="Class: IS1202"
                     android:textColor="#c9242f">
 
                 </TextView>

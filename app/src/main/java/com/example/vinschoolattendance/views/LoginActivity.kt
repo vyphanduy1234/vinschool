@@ -50,8 +50,5 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
-        val studentScheduleRepo = StudentScheduleRepo()
-        studentScheduleRepo.getStudentSchedule()
-
     }
 }

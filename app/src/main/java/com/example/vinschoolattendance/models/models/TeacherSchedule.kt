@@ -1,4 +1,4 @@
-package com.example.vinschoolattendance.models
+package com.example.vinschoolattendance.models.models
 
 class TeacherSchedule {
     var timeHour: String

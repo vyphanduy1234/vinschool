@@ -6,8 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vinschoolattendance.R
 import com.example.vinschoolattendance.adapters.StudentClassAdapter
-import com.example.vinschoolattendance.models.StudentOfClass
-import kotlinx.android.synthetic.main.activity_teacher_edit_student_attendance.*
+import com.example.vinschoolattendance.models.models.StudentOfClass
 
 class TeacherEditStudentAttendance : AppCompatActivity() {
 
@@ -19,8 +18,10 @@ class TeacherEditStudentAttendance : AppCompatActivity() {
     }
 
     private fun initRecycleView(){
-        val studentClass = StudentOfClass()
-        val studentClass2 = StudentOfClass()
+        val studentClass =
+            StudentOfClass()
+        val studentClass2 =
+            StudentOfClass()
         studentClass2.isAttend = false
         var list = mutableListOf<StudentOfClass>()
         list.add(studentClass)

@@ -1,4 +1,4 @@
-package com.example.vinschoolattendance.models
+package com.example.vinschoolattendance.models.models
 
 import com.example.vinschoolattendance.R
 

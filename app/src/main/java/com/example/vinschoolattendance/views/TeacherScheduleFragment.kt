@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.example.vinschoolattendance.R
 import com.example.vinschoolattendance.adapters.TeacherScheduleAdapter
-import com.example.vinschoolattendance.models.TeacherSchedule
+import com.example.vinschoolattendance.models.models.TeacherSchedule
 
 /**
  * A simple [Fragment] subclass.
@@ -30,7 +30,8 @@ class TeacherScheduleFragment : Fragment() {
 
     private fun initRecycleView(view: View){
         var recycleView: RecyclerView = view.findViewById(R.id.rcv_teacher_schedule)
-        val teacherSchedule: TeacherSchedule = TeacherSchedule()
+        val teacherSchedule: TeacherSchedule =
+            TeacherSchedule()
         var list = mutableListOf<TeacherSchedule>()
         list.add(teacherSchedule)
 
