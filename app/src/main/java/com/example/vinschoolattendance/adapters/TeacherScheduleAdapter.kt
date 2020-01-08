@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vinschoolattendance.R
-import com.example.vinschoolattendance.models.models.TeacherSchedule
+import com.example.vinschoolattendance.models.entities.TeacherSchedule
 import com.example.vinschoolattendance.views.TeacherEditStudentAttendance
 import com.example.vinschoolattendance.views.TeacherTakeAttendanceActivity
 

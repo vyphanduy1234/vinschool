@@ -1,51 +1,48 @@
 package com.example.vinschoolattendance.models.pojos
 
 import com.appsnipp.creativelogindesigns.model.StudentSchedule
-import com.example.vinschoolattendance.models.models.FriendAttend
+import com.example.vinschoolattendance.models.entities.FriendAttend
 import com.google.gson.annotations.SerializedName
 import java.time.LocalDateTime
-import java.time.LocalTime
 import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 import java.util.*
 
-class StudentSchedulePojo {
-    @SerializedName("timeStart")
+class StudentScheduleResponse {
+    @SerializedName("time_start")
     var timeStart: String
-    @SerializedName("timeFinish")
-    var timeFinish: String
     @SerializedName("isAttend")
     var isAttend: Boolean
     @SerializedName("subject")
     var subject: String
+    @SerializedName("teacher")
+    var teacher: String
     @SerializedName("room")
     var room: String
-    var subjectTime: String
-    //var friendAttends: MutableList<FriendAttend>
-    @SerializedName("classname")
+    @SerializedName("list_student_attend")
+    var listStudentAttend: MutableList<FriendAttend>
+    @SerializedName("class")
     var cclass: String
 
     constructor(
-        timeStart: String = "07",
-        timeFinish: String = "00",
-        isAttend: Boolean = true,
-        subject: String = "Physic",
-        cclass: String = "IS1000",
-        room: String = "314",
-        subjectTime: String = "1 hour 30 minutes"
-        //friendAttends: MutableList<FriendAttend>? = mutableListOf()
+        timeStart: String,
+        isAttend: Boolean,
+        subject: String,
+        teacher: String,
+        room: String,
+        listStudentAttend: MutableList<FriendAttend>,
+        cclass: String
     ) {
         this.timeStart = timeStart
-        this.timeFinish = timeFinish
         this.isAttend = isAttend
         this.subject = subject
-        this.subjectTime = subjectTime
-        //this.friendAttends = friendAttends
-        this.cclass = cclass
+        this.teacher = teacher
         this.room = room
+        this.listStudentAttend = listStudentAttend
+        this.cclass = cclass
     }
 
-    open fun toStudentSchedule(): StudentSchedule?{
+
+    open fun toStudentSchedule(): StudentSchedule{
         val sc = StudentSchedule()
         sc.cclass = this.cclass
         //sc.friendAttends = this.friendAttends?.toMutableList()

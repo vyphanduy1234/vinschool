@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.example.vinschoolattendance.R
 import com.example.vinschoolattendance.adapters.TeacherScheduleAdapter
-import com.example.vinschoolattendance.models.models.TeacherSchedule
+import com.example.vinschoolattendance.models.entities.TeacherSchedule
 
 /**
  * A simple [Fragment] subclass.

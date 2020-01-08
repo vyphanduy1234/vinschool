@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vinschoolattendance.R
 import com.example.vinschoolattendance.adapters.StudentClassAdapter
-import com.example.vinschoolattendance.models.models.StudentOfClass
+import com.example.vinschoolattendance.models.entities.StudentOfClass
 
 class TeacherEditStudentAttendance : AppCompatActivity() {
 

@@ -1,5 +1,8 @@
-package com.example.vinschoolattendance.models.models
+package com.example.vinschoolattendance.models.entities
 
+import androidx.room.Entity
+
+@Entity(tableName = "TeacherSchedule")
 class TeacherSchedule {
     var timeHour: String
     var timeMinute: String

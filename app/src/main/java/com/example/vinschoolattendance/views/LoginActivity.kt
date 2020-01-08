@@ -2,13 +2,8 @@ package com.example.vinschoolattendance
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import com.example.vinschoolattendance.R
-import com.example.vinschoolattendance.repositories.StudentScheduleRepo
 import com.example.vinschoolattendance.viewmodels.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.layout_login.*

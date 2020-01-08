@@ -1,7 +1,9 @@
 package com.appsnipp.creativelogindesigns.model
 
-import com.example.vinschoolattendance.models.models.FriendAttend
+import androidx.room.Entity
+import com.example.vinschoolattendance.models.entities.FriendAttend
 
+@Entity(tableName = "StudentSchedule")
 class StudentSchedule {
     var timeStartHour: Int
     var timeStartMinute: Int

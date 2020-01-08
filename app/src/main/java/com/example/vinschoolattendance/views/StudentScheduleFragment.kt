@@ -12,8 +12,7 @@ import com.appsnipp.creativelogindesigns.model.StudentSchedule
 
 import com.example.vinschoolattendance.R
 import com.example.vinschoolattendance.adapters.StudentScheduleAdapter
-import com.example.vinschoolattendance.repositories.StudentScheduleRepo
-import kotlinx.android.synthetic.main.fragment_student_schedule.*
+import com.example.vinschoolattendance.repositories.StudentRepository
 
 /**
  * A simple [Fragment] subclass.
@@ -31,10 +30,10 @@ class StudentScheduleFragment : Fragment() {
     }
 
     fun initRecyleView(view: View){
-        var studentScheduleRepo = StudentScheduleRepo()
+        var studentScheduleRepo = StudentRepository()
         var listSchedule: MutableList<StudentSchedule> = mutableListOf()
         var studentScheduleAdapter = StudentScheduleAdapter(listSchedule,context!!)
-        val scRepo = StudentScheduleRepo()
+        val scRepo = StudentRepository()
         scRepo.fetchStudentSchedule(studentScheduleAdapter)
         var recyclerView: RecyclerView = view.findViewById(R.id.rcv_student_schedule)
         recyclerView.layoutManager = LinearLayoutManager(context)

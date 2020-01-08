@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vinschoolattendance.R
-import com.example.vinschoolattendance.models.models.StudentOfClass
+import com.example.vinschoolattendance.models.entities.StudentOfClass
 
 class StudentClassAdapter(var listStudentClass: MutableList<StudentOfClass>)
     : RecyclerView.Adapter<StudentClassAdapter.StudentClassViewHolder>() {
