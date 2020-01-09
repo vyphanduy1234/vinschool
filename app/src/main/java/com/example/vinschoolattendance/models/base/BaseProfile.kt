@@ -7,15 +7,19 @@ open class BaseProfile {
     @ColumnInfo(name = "class")
     @SerializedName("class")
     var cclass: String
+
     @ColumnInfo(name = "email")
     @SerializedName("email")
     var email: String
+
     @ColumnInfo(name = "account")
     @SerializedName("account")
     var account: String
+
     @ColumnInfo(name = "avatar_link")
     @SerializedName("avatar_link")
     var avatarLink: String
+
     @ColumnInfo(name = "name")
     @SerializedName("name")
     var name: String

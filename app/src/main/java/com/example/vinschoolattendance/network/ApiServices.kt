@@ -6,11 +6,14 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import java.util.*
 import io.reactivex.Observable
+import retrofit2.http.Query
+
 interface ApiServices {
     @GET("/api/student/schedule/{sid}")
-    fun getStudentSchedule(@Path("sid") sid: String): Observable<MutableList<StudentScheduleResponse>>
+    fun getStudentSchedule(@Path("sid") sid: Int, @Query("date") date: String): Observable<MutableList<StudentScheduleResponse>>
 
-    fun getTeacherSchedule(): Observable<MutableList<TeacherScheduleResponse>>
+    @GET("/api/teacher/schedule/{tid}")
+    fun getTeacherSchedule(@Path("tid") tid: Int, @Query("date") date: String): Observable<MutableList<TeacherScheduleResponse>>
 
     fun getAllClass(): Observable<MutableList<ClassResponse>>
 

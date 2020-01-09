@@ -8,33 +8,76 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vinschoolattendance.R
 import com.example.vinschoolattendance.models.entities.StudentOfClass
+import kotlinx.android.synthetic.main.item_student_class.view.*
 
-class StudentClassAdapter(var listStudentClass: MutableList<StudentOfClass>)
-    : RecyclerView.Adapter<StudentClassAdapter.StudentClassViewHolder>() {
+class StudentClassAdapter(
+    var listStudentClass: MutableList<StudentOfClass>,
+    var attendanceChangeListener: onAttendanceChange
+) : RecyclerView.Adapter<StudentClassAdapter.StudentClassViewHolder>() {
 
-    inner class StudentClassViewHolder(view: View):RecyclerView.ViewHolder(view){
-        var txtName: TextView = view.findViewById(R.id.tv_name)
-        var imgAvatar: ImageView = view.findViewById(R.id.img_avatar)
-        var imgAttend: ImageView = view.findViewById(R.id.img_attend)
-        var imgNotAttend: ImageView = view.findViewById(R.id.img_not_attend)
+    private val CAN_CHANGE_STATUS = 1
+    private val CANNOT_CHANGE_STATUS = 2
+
+    inner class StudentClassViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    }
+
+    interface onAttendanceChange {
+        fun changeToAttend(sid: Int, scheduleId: Int)
+        fun changeToNotAttend(sid: Int, scheduleId: Int)
     }
 
     override fun onBindViewHolder(holder: StudentClassViewHolder, position: Int) {
         val studentClass = listStudentClass[position]
-        holder.imgAvatar.setImageResource(studentClass.avatarSource)
-        holder.txtName.text = studentClass.name
+        holder.itemView.img_avatar.setImageResource(studentClass.avatarSource)
+        holder.itemView.tv_name.text = studentClass.name
 
-        studentClass.isAttend?.let{
-            when(it){
-                true ->{
-                    holder.imgAttend.setImageResource(R.drawable.v_tick)
-                    holder.imgNotAttend.setImageResource(R.drawable.na_check)
+        studentClass.isAttend?.let {
+            when (it) {
+                true -> {
+                    holder.itemView.img_attend.setImageResource(R.drawable.v_tick)
+                    holder.itemView.img_not_attend.setImageResource(R.drawable.na_check)
+                    holder.itemView.img_not_attend.setTag(CAN_CHANGE_STATUS)
                 }
-                false ->{
-                    holder.imgNotAttend.setImageResource(R.drawable.x_tick)
-                    holder.imgAttend.setImageResource(R.drawable.na_check)
+                false -> {
+                    holder.itemView.img_not_attend.setImageResource(R.drawable.x_tick)
+                    holder.itemView.img_attend.setImageResource(R.drawable.na_check)
+                    holder.itemView.img_attend.setTag(CAN_CHANGE_STATUS)
                 }
             }
+            holder.itemView.img_attend.let {
+                it.setOnClickListener {
+                    val im = it as ImageView
+                    if (im.tag == CAN_CHANGE_STATUS) {
+                        im.setImageResource(R.drawable.v_tick)
+                        im.setTag(CANNOT_CHANGE_STATUS)
+                        holder.itemView.img_not_attend.setImageResource(R.drawable.na_check)
+                        holder.itemView.img_not_attend.setTag(CAN_CHANGE_STATUS)
+
+                        attendanceChangeListener.changeToAttend(
+                            studentClass.id,
+                            studentClass.scheduleId
+                        )
+                    }
+                }
+            }
+
+            holder.itemView.img_not_attend.let {
+                it.setOnClickListener {
+                    val im = it as ImageView
+                    if (im.tag == CAN_CHANGE_STATUS) {
+                        im.setImageResource(R.drawable.x_tick)
+                        im.setTag(CANNOT_CHANGE_STATUS)
+                        holder.itemView.img_attend.setImageResource(R.drawable.na_check)
+                        holder.itemView.img_attend.setTag(CAN_CHANGE_STATUS)
+
+                        attendanceChangeListener.changeToNotAttend(
+                            studentClass.id,
+                            studentClass.scheduleId
+                        )
+                    }
+                }
+            }
+
         }
     }
 
@@ -44,7 +87,7 @@ class StudentClassAdapter(var listStudentClass: MutableList<StudentOfClass>)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentClassViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        var view = inflater.inflate(R.layout.item_student_class,parent,false)
+        var view = inflater.inflate(R.layout.item_student_class, parent, false)
 
         return StudentClassViewHolder(view)
     }

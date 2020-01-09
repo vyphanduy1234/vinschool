@@ -5,11 +5,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.vinschoolattendance.viewmodels.LoginViewModel
+import com.example.vinschoolattendance.views.base.IBaseView
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.layout_login.*
 import kotlinx.android.synthetic.main.layout_register.*
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), IBaseView {
     private val TAG = "LoginActivity"
     private var loginViewModel: LoginViewModel? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +19,10 @@ class LoginActivity : AppCompatActivity() {
         initEvent()
     }
 
-    fun initEvent(){
+    override fun setUpViewModel() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+    override fun initEvent(){
         //event
         tv_register.setOnClickListener{
             layout_login.visibility = View.GONE

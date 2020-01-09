@@ -4,12 +4,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.example.vinschoolattendance.views.StudentProfileFragment
-import com.example.vinschoolattendance.views.StudentScheduleFragment
+import com.example.vinschoolattendance.views.base.IBaseView
+import com.example.vinschoolattendance.views.fragment.StudentProfileFragment
+import com.example.vinschoolattendance.views.fragment.StudentScheduleFragment
 
 import kotlinx.android.synthetic.main.activity_student.*
 
-class StudentActivity : AppCompatActivity() {
+class StudentActivity : AppCompatActivity(), IBaseView {
 
     private val PROFILE: String = "profile"
     private val SCHEDULE: String = "schedule"
@@ -18,7 +19,14 @@ class StudentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student)
         setUpViewPager()
+    }
 
+    override fun setUpViewModel(){
+
+    }
+
+    override fun initEvent() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun setUpViewPager() {
@@ -45,13 +53,15 @@ class StudentActivity : AppCompatActivity() {
 
         when(tab){
             PROFILE ->{
-                selectedFragment = StudentProfileFragment()
+                selectedFragment =
+                    StudentProfileFragment()
                 fragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, selectedFragment!!)
                     .commit()
             }
             SCHEDULE ->{
-                selectedFragment = StudentScheduleFragment()
+                selectedFragment =
+                    StudentScheduleFragment()
                 fragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, selectedFragment!!)
                     .commit()

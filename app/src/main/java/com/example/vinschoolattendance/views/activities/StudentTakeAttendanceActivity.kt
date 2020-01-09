@@ -1,4 +1,4 @@
-package com.example.vinschoolattendance.views
+package com.example.vinschoolattendance.views.activities
 
 import android.Manifest
 import android.content.DialogInterface
@@ -14,10 +14,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.vinschoolattendance.views.base.IBaseView
 import com.google.zxing.Result
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 
-class StudentTakeAttendanceActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
+class StudentTakeAttendanceActivity : AppCompatActivity(), ZXingScannerView.ResultHandler, IBaseView {
 
     private var scannerView: ZXingScannerView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +37,14 @@ class StudentTakeAttendanceActivity : AppCompatActivity(), ZXingScannerView.Resu
                 requestPermission()
             }
         }
+    }
+
+    override fun initEvent() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setUpViewModel() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun checkPermission(): Boolean {

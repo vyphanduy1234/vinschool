@@ -13,25 +13,28 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Exception
+import java.util.logging.LogManager
 
 class StudentRepository {
 
-    lateinit var listStudentSchedule: MutableList<StudentSchedule>
-    open fun getStudentSchedule(adapter : StudentScheduleAdapter) : MutableList<StudentSchedule> {
+     var listStudentSchedule: MutableList<StudentSchedule> = mutableListOf()
+     open fun  fetchStudentSchedule(): Observable<List<StudentSchedule>> {
         val service: ApiServices = ApiUtils.getApiService()
-
-        val response: Observable<MutableList<StudentScheduleResponse>> = service.getStudentSchedule("1")
-        response!!.observeOn(AndroidSchedulers.mainThread())
-                  .subscribeOn(Schedulers.io())
-                  .subscribe(this::onNext ,{error -> Log.d("StudentRepository",error.message)})
-
-        return listStudentSchedule
+         return service.getStudentSchedule(2, "2020-01-08")
+             .map {
+                 it.map {item -> item.toStudentSchedule()}
+             }
     }
 
-    fun onNext(response: MutableList<StudentScheduleResponse>) {
-        for(item in response){
-            val castItem = item.toStudentSchedule()
-            listStudentSchedule.add(castItem)
-        }
-    }
+//    open fun fakeStudentSchedule(){
+//        val studentSchedule1: StudentSchedule = StudentSchedule()
+//        val studentSchedule2: StudentSchedule = StudentSchedule()
+//        val studentSchedule3: StudentSchedule = StudentSchedule()
+//
+//        listStudentSchedule.add(studentSchedule1)
+//        listStudentSchedule.add(studentSchedule2)
+//        listStudentSchedule.add(studentSchedule3)
+//    }
+
 }

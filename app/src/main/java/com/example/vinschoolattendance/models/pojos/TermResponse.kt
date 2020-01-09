@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 class TermResponse {
     @SerializedName("term")
     var term: String
+
     @SerializedName("id")
     var id: Int
 

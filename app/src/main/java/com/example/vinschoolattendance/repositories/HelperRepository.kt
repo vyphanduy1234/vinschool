@@ -21,58 +21,23 @@ class HelperRepository {
     var service: ApiServices = ApiUtils.getApiService()
 
     //lay ve danh sach cac mon hoc tu server
-    fun getSubject(): MutableList<SubjectResponse> {
-        var response: Observable<MutableList<SubjectResponse>> = service.getAllSubject()
-        response.observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.newThread())
-            .subscribe(this::onSubjectNext, { error -> Log.d("", error.message) })
-
-        return listSubject
+    fun fetchSubject(): Observable<MutableList<SubjectResponse>> {
+        return service.getAllSubject()
     }
 
     //lay ve danh sach cac phong hoc tu server
-    fun getRoom(): MutableList<RoomResponse> {
-        var response: Observable<MutableList<RoomResponse>> = service.getAllRoom()
-        response.observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.newThread())
-            .subscribe(this::onRoomNext, { error -> Log.d("", error.message) })
-
-        return listRoom
+    fun fetchRoom(): Observable<MutableList<RoomResponse>> {
+        return service.getAllRoom()
     }
 
     //lay ve danh sach cac lop tu server
-    fun getClass(): MutableList<ClassResponse> {
-        var response: Observable<MutableList<ClassResponse>> = service.getAllClass()
-        response.observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.newThread())
-            .subscribe(this::onClassNext, { error -> Log.d("", error.message) })
-
-        return listClass
+    fun fetchClass(): Observable<MutableList<ClassResponse>> {
+        return service.getAllClass()
     }
 
     //lay ve danh sach cac ki hoc tu server
-    fun getTerm(): MutableList<TermResponse> {
-        var response: Observable<MutableList<TermResponse>> = service.getAllTerm()
-        response.observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.newThread())
-            .subscribe(this::onTermNext, { error -> Log.d("", error.message) })
-
-        return listTerm
+    fun fetchTerm(): Observable<MutableList<TermResponse>> {
+        return service.getAllTerm()
     }
 
-    fun onSubjectNext(response: MutableList<SubjectResponse>) {
-        this.listSubject = response
-    }
-
-    fun onRoomNext(response: MutableList<RoomResponse>) {
-        this.listRoom = response
-    }
-
-    fun onTermNext(response: MutableList<TermResponse>) {
-        this.listTerm = response
-    }
-
-    fun onClassNext(response: MutableList<ClassResponse>) {
-        this.listClass = response
-    }
 }

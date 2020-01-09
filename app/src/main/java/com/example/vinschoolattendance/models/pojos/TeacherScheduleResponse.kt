@@ -1,22 +1,30 @@
 package com.example.vinschoolattendance.models.pojos
 
-import com.example.vinschoolattendance.models.entities.FriendAttend
 import com.example.vinschoolattendance.models.entities.TeacherSchedule
 import com.google.gson.annotations.SerializedName
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class TeacherScheduleResponse {
     @SerializedName("time_start")
     var timeStart: String
-    @SerializedName("class")
+
+    @SerializedName("class_name")
     var cclass: String
+
     @SerializedName("subject")
     var subject: String
+
     @SerializedName("room")
     var room: String
-    @SerializedName("class_total_student")
+
+    @SerializedName("total")
     var classTotalStudent: Int
-    @SerializedName("class_total_student_attend")
+
+    @SerializedName("total_attendance")
     var classTotalStudentAttend: Int
+
     @SerializedName("schedule_id")
     var scheduleId: Int
 
@@ -38,7 +46,28 @@ class TeacherScheduleResponse {
         this.scheduleId = scheduleId
     }
 
-    fun toTeacherSchedule(): TeacherSchedule{
-        return TeacherSchedule()
+    fun toTeacherSchedule(): TeacherSchedule {
+
+        var teacherSchedule = TeacherSchedule()
+
+        teacherSchedule.cclass = this.cclass
+        teacherSchedule.subject = this.subject
+        val time =
+            LocalTime.parse(
+                this.timeStart,
+                DateTimeFormatter.ofPattern(
+                    "HH:mm:ss",
+                    Locale.ENGLISH
+                )
+            )
+        teacherSchedule.timeHour = time.hour
+        teacherSchedule.timeMinute = time.minute
+        teacherSchedule.timeAT = if (teacherSchedule.timeHour < 12) "AM" else "PM"
+        teacherSchedule.room = this.room
+        teacherSchedule.scheduleId = scheduleId
+        teacherSchedule.totalStudent = this.classTotalStudent
+        teacherSchedule.attendStudent = this.classTotalStudentAttend
+
+        return teacherSchedule
     }
 }

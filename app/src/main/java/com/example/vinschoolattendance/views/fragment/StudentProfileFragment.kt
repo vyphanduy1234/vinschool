@@ -1,4 +1,4 @@
-package com.example.vinschoolattendance.views
+package com.example.vinschoolattendance.views.fragment
 
 
 import android.os.Bundle
@@ -8,11 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.vinschoolattendance.R
+import com.example.vinschoolattendance.views.base.IBaseView
 
 /**
  * A simple [Fragment] subclass.
  */
-class StudentProfileFragment : Fragment() {
+class StudentProfileFragment : Fragment(), IBaseView {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,5 +23,12 @@ class StudentProfileFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_student_profile, container, false)
     }
 
+    override fun initEvent() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setUpViewModel() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
 }

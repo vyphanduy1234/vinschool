@@ -4,5 +4,6 @@ import androidx.room.Entity
 import com.example.vinschoolattendance.models.base.BaseProfile
 
 @Entity(tableName = "StudentProfile")
-class StudentProfile: BaseProfile(account = "",avatarLink = "",cclass = "",email = "",name = "") {
+class StudentProfile :
+    BaseProfile(account = "", avatarLink = "", cclass = "", email = "", name = "") {
 }

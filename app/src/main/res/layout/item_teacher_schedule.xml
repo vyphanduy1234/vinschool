@@ -4,7 +4,9 @@
     android:layout_height="180dp"
     android:background="@drawable/schedule_roundcornor_background"
     android:orientation="horizontal"
-    android:weightSum="10">
+    android:weightSum="10"
+    android:layout_marginTop="10dp"
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -86,17 +88,16 @@
                 android:padding="8dp">
 
                 <ImageView
-                    android:id="@+id/im_attend"
+                    android:id="@+id/im_start"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/v_tick">
-
                 </ImageView>
 
                 <ImageView
-                    android:id="@+id/im_not_attend"
+                    android:id="@+id/im_not_start"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentRight="true"
@@ -128,35 +129,35 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="6"
+                android:layout_weight="6.5"
                 android:background="@drawable/side_border_background">
 
                 <TextView
                     android:id="@+id/tv_class"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:text="Class: 12A10"
                     android:textColor="#268ed4"
-                    android:textSize="25sp">
+                    android:textSize="20sp">
 
                 </TextView>
                 <TextView
-                    android:id="@+id/tv_subject_room"
+                    android:id="@+id/tv_subject"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/tv_class"
-                    android:text="Physic / 312"
+                    android:text="Physic"
                     android:textColor="#4263f5"
                     android:textSize="20dp">
 
                 </TextView>
 
                 <TextView
-                    android:id="@+id/tv_time_last"
+                    android:id="@+id/tv_room"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/tv_subject_room"
-                    android:text="1 Hour 30 Minutes"
+                    android:layout_below="@id/tv_subject"
+                    android:text="Room: 321"
                     android:textColor="#999192"
                     android:textSize="15sp">
 
@@ -167,7 +168,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="4"
+                android:layout_weight="3.5"
                 android:background="@drawable/side_border_background">
 
                 <TextView
@@ -184,7 +185,7 @@
 
                 <TextView
                     android:layout_marginBottom="5dp"
-                    android:id="@+id/tv_attend_student"
+                    android:id="@+id/tv_total_student_attend"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/tv_total_student"

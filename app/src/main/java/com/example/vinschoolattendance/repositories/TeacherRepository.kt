@@ -14,21 +14,11 @@ import java.util.*
 class TeacherRepository {
 
     lateinit var listTeacherSchedule: MutableList<TeacherSchedule>
-    fun getTeacherSchedule() : MutableList<TeacherSchedule>{
+    fun fetchTeacherSchedule(): Observable<List<TeacherSchedule>> {
         val service: ApiServices = ApiUtils.getApiService()
-        val response: Observable<MutableList<TeacherScheduleResponse>> = service.getTeacherSchedule()
-
-        response.observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe(this::onNext ,{error -> Log.d("StudentRepository",error.message)})
-
-        return listTeacherSchedule
+        return service.getTeacherSchedule(1,"2020-01-08")
+            .map { items -> items.map { item -> item.toTeacherSchedule() } }
     }
 
-    fun onNext(response: MutableList<TeacherScheduleResponse>){
-                for(item in response){
-            val castItem = item.toTeacherSchedule()
-            listTeacherSchedule.add(castItem)
-        }
-    }
+
 }
