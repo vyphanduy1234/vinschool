@@ -11,28 +11,21 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
-class TeacherViewModel : ViewModel() {
+class TeacherViewModel : BaseViewModel() {
     private var _listTeacherSchedule: MutableLiveData<MutableList<TeacherSchedule>> =
         MutableLiveData()
 
-    private var _internetStatus: MutableLiveData<Int> =
-        MutableLiveData(Network.NETWORK_CONNECT_OK)
-
     fun getTeacherSchedule() = _listTeacherSchedule
 
-    fun getInternetStatus() = _internetStatus
-
     fun loadTeacherSchedule() {
-        val teacherRepo = TeacherRepository()
-        teacherRepo.fetchTeacherSchedule()
+        TeacherRepository.fetchTeacherSchedule()
             .timeout(Network.NETWORK_CONNECT_TIME_OUT, TimeUnit.SECONDS)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({ schedule ->
                 _listTeacherSchedule.value = schedule.toMutableList()
                 _internetStatus.value = Network.NETWORK_CONNECT_OK
-            },
-                { _internetStatus.value = Network.NETWORK_CONNECT_ERROR }
+            },this::onConnectError
             )
     }
 }

@@ -7,6 +7,7 @@ import com.appsnipp.creativelogindesigns.api.ApiUtils
 import com.appsnipp.creativelogindesigns.model.StudentSchedule
 import com.example.vinschoolattendance.adapters.StudentScheduleAdapter
 import com.example.vinschoolattendance.models.pojos.StudentScheduleResponse
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -16,15 +17,19 @@ import retrofit2.Response
 import java.lang.Exception
 import java.util.logging.LogManager
 
-class StudentRepository {
+object StudentRepository {
 
-     var listStudentSchedule: MutableList<StudentSchedule> = mutableListOf()
-     open fun  fetchStudentSchedule(): Observable<List<StudentSchedule>> {
+      fun  fetchStudentSchedule(): Observable<List<StudentSchedule>> {
         val service: ApiServices = ApiUtils.getApiService()
          return service.getStudentSchedule(2, "2020-01-08")
              .map {
                  it.map {item -> item.toStudentSchedule()}
              }
+    }
+
+     fun  takeAttendance(sid: Int, scheduleId: Int): Completable{
+        val service: ApiServices = ApiUtils.getApiService()
+        return service.takeAttendanceForStudent(sid, scheduleId)
     }
 
 //    open fun fakeStudentSchedule(){

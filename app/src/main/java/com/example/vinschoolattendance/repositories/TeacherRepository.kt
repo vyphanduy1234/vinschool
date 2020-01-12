@@ -11,9 +11,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
-class TeacherRepository {
+object TeacherRepository {
 
-    lateinit var listTeacherSchedule: MutableList<TeacherSchedule>
     fun fetchTeacherSchedule(): Observable<List<TeacherSchedule>> {
         val service: ApiServices = ApiUtils.getApiService()
         return service.getTeacherSchedule(1,"2020-01-08")

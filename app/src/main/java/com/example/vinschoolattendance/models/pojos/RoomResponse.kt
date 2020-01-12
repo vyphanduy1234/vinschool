@@ -3,7 +3,7 @@ package com.example.vinschoolattendance.models.pojos
 import com.google.gson.annotations.SerializedName
 
 class RoomResponse {
-    @SerializedName("room")
+    @SerializedName("name")
     var room: String
 
     @SerializedName("id")
@@ -12,5 +12,9 @@ class RoomResponse {
     constructor(room: String, id: Int) {
         this.room = room
         this.id = id
+    }
+
+    override fun toString(): String {
+        return this.room
     }
 }

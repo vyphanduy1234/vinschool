@@ -6,8 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 
 import com.example.vinschoolattendance.R
+import com.example.vinschoolattendance.databinding.FragmentTeacherProfileBinding
+import com.example.vinschoolattendance.viewmodels.HelperViewModel
 import com.example.vinschoolattendance.views.base.IBaseView
 
 /**
@@ -15,19 +20,30 @@ import com.example.vinschoolattendance.views.base.IBaseView
  */
 class TeacherProfileFragment : Fragment(),IBaseView {
 
+    lateinit var mViewModel: HelperViewModel
+    lateinit var mView: View
+    lateinit var mBinding: FragmentTeacherProfileBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_teacher_profile, container, false)
+        mView = inflater.inflate(R.layout.fragment_teacher_profile, container, false)
+        mBinding = DataBindingUtil.setContentView(activity!!,R.layout.fragment_teacher_profile)
+
+        setUpViewModel()
+        return mView
     }
     override fun initEvent() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun setUpViewModel() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        mViewModel = ViewModelProviders.of(this).get(HelperViewModel::class.java)
+
+        mViewModel.loadTeacherProfile(1)
+        mViewModel.getTeacherProfile().observe(this, Observer {
+            mBinding.viewmodel = it
+        })
     }
 
 }

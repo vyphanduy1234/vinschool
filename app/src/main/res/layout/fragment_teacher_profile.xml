@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.example.vinschoolattendance.models.base.BaseProfile" />
+    </data>
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whiteCardColor"
@@ -15,7 +21,6 @@
                 android:layout_height="350dp"
                 android:orientation="vertical">
                 <de.hdodenhof.circleimageview.CircleImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/img_avatar"
                     android:layout_width="96dp"
                     android:layout_height="96dp"
@@ -25,13 +30,13 @@
                     android:layout_gravity="center_horizontal"
                     app:civ_border_color="#FF000000"/>
                 <TextView
-                    android:id="@+id/txt_name"
+                    android:id="@+id/tv_name"
                     android:layout_marginTop="10dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Wiliam Snoe"
                     android:textColor="#fff"
+                    android:text="@{viewmodel.name}"
                     android:textStyle="bold"
                     android:textSize="21sp"/>
             </LinearLayout>
@@ -56,14 +61,15 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Photos"
+                            android:text="supervisor of"
                             android:textSize="20sp"
                             />
                         <TextView
+                            android:id="@+id/tv_class"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="125"
                             android:textStyle="bold"
+                            android:text="@{viewmodel.cclass}"
                             android:textSize="20sp"
                             android:paddingTop="10dp"
                             android:textColor="@color/colorAccent"/>
@@ -78,16 +84,17 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Followers"
+                            android:text="account"
                             android:textSize="20sp"
                             />
                         <TextView
+                            android:id="@+id/tv_account"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1205"
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:paddingTop="10dp"
+                            android:text="@{viewmodel.account}"
                             android:textColor="@color/colorAccent"/>
 
                     </LinearLayout>
@@ -100,13 +107,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Following"
+                            android:text="MSGV"
                             android:textSize="20sp"
                             />
                         <TextView
+                            android:id="@+id/tv_msgv"
+                            android:text="@{viewmodel.id}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="360"
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:paddingTop="10dp"
@@ -134,13 +142,13 @@
                     android:layout_height="36dp"
                     android:src="@drawable/icon_class"/>
                 <TextView
-                    android:id="@+id/txt_class"
+                    android:id="@+id/tv_email"
                     android:textStyle="bold"
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp"
-                    android:text="Wiliam@gmail.com"/>
+                    android:text="@{viewmodel.email}"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="25dp"
@@ -201,3 +209,4 @@
             </LinearLayout>
         </LinearLayout>
 </LinearLayout>
+</layout>

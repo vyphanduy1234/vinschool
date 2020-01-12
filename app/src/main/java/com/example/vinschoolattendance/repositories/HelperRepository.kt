@@ -1,24 +1,14 @@
 package com.example.vinschoolattendance.repositories
 
-import android.util.Log
-import androidx.room.Room
 import com.appsnipp.creativelogindesigns.api.ApiServices
 import com.appsnipp.creativelogindesigns.api.ApiUtils
-import com.example.vinschoolattendance.models.pojos.ClassResponse
-import com.example.vinschoolattendance.models.pojos.RoomResponse
-import com.example.vinschoolattendance.models.pojos.SubjectResponse
-import com.example.vinschoolattendance.models.pojos.TermResponse
+import com.example.vinschoolattendance.models.base.BaseProfile
+import com.example.vinschoolattendance.models.pojos.*
+import io.reactivex.Completable
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import javax.security.auth.Subject
 
-class HelperRepository {
-    lateinit var listSubject: MutableList<SubjectResponse>
-    lateinit var listRoom: MutableList<RoomResponse>
-    lateinit var listClass: MutableList<ClassResponse>
-    lateinit var listTerm: MutableList<TermResponse>
-    var service: ApiServices = ApiUtils.getApiService()
+object HelperRepository {
+    private var service: ApiServices = ApiUtils.getApiService()
 
     //lay ve danh sach cac mon hoc tu server
     fun fetchSubject(): Observable<MutableList<SubjectResponse>> {
@@ -38,6 +28,29 @@ class HelperRepository {
     //lay ve danh sach cac ki hoc tu server
     fun fetchTerm(): Observable<MutableList<TermResponse>> {
         return service.getAllTerm()
+    }
+
+    //lay ve danh sach cac ki hoc tu server
+    fun fetchTeacher(): Observable<MutableList<TeacherResponse>> {
+        return service.getAllTeacher()
+    }
+
+    //lay ve danh sach cac ki hoc tu server
+    fun fetchSlot(): Observable<MutableList<SlotResponse>> {
+        return service.getAllSlot()
+    }
+
+    //lay ve thong tin nguoi dung
+    fun fetchStudentInfo(sid: Int): Observable<BaseProfile>{
+        return service.getStudentInfo(sid)
+    }
+
+    fun fetchTeacherInfo(tid: Int): Observable<BaseProfile>{
+        return service.getTeacherInfo(tid)
+    }
+
+    fun registerSchedule(scheduleReq: ScheduleRegisterRequest): Completable{
+        return service.registerSchedule(scheduleReq)
     }
 
 }

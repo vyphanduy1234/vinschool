@@ -14,6 +14,8 @@ class StudentSchedule {
     var cclass: String
     var room: String
     var teacher: String
+    var date: String
+    var timeStart: String
 
     constructor(
         timeHour: Int = 7,
@@ -25,7 +27,9 @@ class StudentSchedule {
         subjectTime: String = "1 hour 30 minutes",
         friendAttends: List<String> = emptyList<String>(),
         room: String = "314",
-        teacher: String = "Nhat"
+        teacher: String = "Nhat",
+         date: String = "",
+        timeStart: String = ""
     ) {
         this.timeStartHour = timeHour
         this.timeStartMinute = timeMinute
@@ -37,5 +41,7 @@ class StudentSchedule {
         this.cclass = cclass
         this.room = room
         this.teacher = teacher
+        this.date = date
+        this.timeStart = timeStart
     }
 }

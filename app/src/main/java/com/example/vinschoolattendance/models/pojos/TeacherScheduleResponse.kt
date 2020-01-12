@@ -19,6 +19,9 @@ class TeacherScheduleResponse {
     @SerializedName("room")
     var room: String
 
+    @SerializedName("date")
+    var date: String
+
     @SerializedName("total")
     var classTotalStudent: Int
 
@@ -35,7 +38,8 @@ class TeacherScheduleResponse {
         room: String,
         classTotalStudent: Int,
         classTotalStudentAttend: Int,
-        scheduleId: Int
+        scheduleId: Int,
+        date: String
     ) {
         this.timeStart = timeStart
         this.cclass = cclass
@@ -44,6 +48,7 @@ class TeacherScheduleResponse {
         this.classTotalStudent = classTotalStudent
         this.classTotalStudentAttend = classTotalStudentAttend
         this.scheduleId = scheduleId
+        this.date = date
     }
 
     fun toTeacherSchedule(): TeacherSchedule {
@@ -67,7 +72,8 @@ class TeacherScheduleResponse {
         teacherSchedule.scheduleId = scheduleId
         teacherSchedule.totalStudent = this.classTotalStudent
         teacherSchedule.attendStudent = this.classTotalStudentAttend
-
+        teacherSchedule.date = this.date
+        teacherSchedule.timeStart = this.timeStart
         return teacherSchedule
     }
 }

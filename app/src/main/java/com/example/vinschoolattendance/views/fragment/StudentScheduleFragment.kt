@@ -1,28 +1,30 @@
 package com.example.vinschoolattendance.views.fragment
 
 
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appsnipp.creativelogindesigns.model.StudentSchedule
-
 import com.example.vinschoolattendance.R
 import com.example.vinschoolattendance.adapters.StudentScheduleAdapter
 import com.example.vinschoolattendance.network.Network
-import com.example.vinschoolattendance.repositories.StudentRepository
 import com.example.vinschoolattendance.viewmodels.StudentViewModel
 import com.example.vinschoolattendance.views.base.IBaseView
+import kotlinx.android.synthetic.main.fragment_student_schedule.view.*
 import kotlinx.android.synthetic.main.fragment_teacher_schedule.*
+
 
 /**
  * A simple [Fragment] subclass.
@@ -45,6 +47,17 @@ class StudentScheduleFragment : Fragment(), IBaseView {
         tvErrorLoading = mView.findViewById(R.id.tv_internet_error)
         mProgressBar.visibility = View.VISIBLE
         tvErrorLoading.visibility = View.INVISIBLE
+
+        mView.btn_pick_a_date.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(
+                context,
+                OnDateSetListener { datePicker, year, month, day ->
+                    Toast.makeText(context,"year: $year month: $month day: $day",Toast.LENGTH_LONG)
+                }, 0, 0, 0
+            )
+            datePickerDialog.show()
+        }
+
         initRecyleView()
         setUpViewModel()
         return mView

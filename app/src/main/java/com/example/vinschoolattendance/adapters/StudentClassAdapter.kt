@@ -1,22 +1,27 @@
 package com.example.vinschoolattendance.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.vinschoolattendance.R
 import com.example.vinschoolattendance.models.entities.StudentOfClass
 import kotlinx.android.synthetic.main.item_student_class.view.*
 
 class StudentClassAdapter(
     var listStudentClass: MutableList<StudentOfClass>,
+    var context: Context,
     var attendanceChangeListener: onAttendanceChange
 ) : RecyclerView.Adapter<StudentClassAdapter.StudentClassViewHolder>() {
 
-    private val CAN_CHANGE_STATUS = 1
-    private val CANNOT_CHANGE_STATUS = 2
+    companion object{
+        private val CAN_CHANGE_STATUS = 1
+        private val CANNOT_CHANGE_STATUS = 2
+    }
 
     inner class StudentClassViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
@@ -28,9 +33,10 @@ class StudentClassAdapter(
 
     override fun onBindViewHolder(holder: StudentClassViewHolder, position: Int) {
         val studentClass = listStudentClass[position]
-        holder.itemView.img_avatar.setImageResource(studentClass.avatarSource)
+        Glide.with(context).load(studentClass.avatarSource).into(holder.itemView.img_avatar)
         holder.itemView.tv_name.text = studentClass.name
-
+        holder.itemView.tv_student_id.text = "${studentClass.id}"
+        holder.itemView.tv_schedule_id.text = "${studentClass.scheduleId}"
         studentClass.isAttend?.let {
             when (it) {
                 true -> {

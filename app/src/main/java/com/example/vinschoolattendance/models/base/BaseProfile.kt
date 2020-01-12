@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 open class BaseProfile {
     @ColumnInfo(name = "class")
-    @SerializedName("class")
+    @SerializedName("class_name")
     var cclass: String
 
     @ColumnInfo(name = "email")
@@ -24,12 +24,23 @@ open class BaseProfile {
     @SerializedName("name")
     var name: String
 
-    constructor(cclass: String, email: String, account: String, avatarLink: String, name: String) {
+    @ColumnInfo(name = "id")
+    @SerializedName("id")
+    var id: String
+
+    constructor(
+        cclass: String,
+        email: String,
+        account: String,
+        avatarLink: String,
+        name: String,
+        id: String
+    ) {
         this.cclass = cclass
         this.email = email
         this.account = account
         this.avatarLink = avatarLink
         this.name = name
+        this.id = id
     }
-
 }

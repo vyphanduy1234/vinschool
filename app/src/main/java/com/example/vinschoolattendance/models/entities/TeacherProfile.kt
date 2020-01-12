@@ -5,5 +5,5 @@ import com.example.vinschoolattendance.models.base.BaseProfile
 
 @Entity(tableName = "TeacherProfile")
 class TeacherProfile :
-    BaseProfile(account = "", avatarLink = "", cclass = "", email = "", name = "") {
+    BaseProfile(account = "", avatarLink = "", cclass = "", email = "", name = "",id = "") {
 }

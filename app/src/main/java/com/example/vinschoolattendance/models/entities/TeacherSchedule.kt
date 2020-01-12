@@ -8,6 +8,8 @@ class TeacherSchedule {
     var timeMinute: Int
     var timeAT: String
     var subject: String
+    var date: String
+    var timeStart: String
     var room: String
     var isStart: Boolean
     var cclass: String
@@ -25,7 +27,9 @@ class TeacherSchedule {
         totalStudent: Int = 40,
         attendStudent: Int = 38,
         room: String = "312",
-        scheduleId: Int = 1
+        scheduleId: Int = 1,
+        date: String = "",
+        timeStart: String = ""
     ) {
         this.timeHour = timeHour
         this.timeMinute = timeMinute
@@ -37,5 +41,7 @@ class TeacherSchedule {
         this.attendStudent = attendStudent
         this.room = room
         this.scheduleId = scheduleId
+        this.date = date
+        this.timeStart = timeStart
     }
 }

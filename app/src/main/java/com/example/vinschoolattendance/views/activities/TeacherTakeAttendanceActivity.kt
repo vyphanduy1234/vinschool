@@ -80,7 +80,7 @@ class TeacherTakeAttendanceActivity : AppCompatActivity(), IBaseView {
         btn_check_attend.setOnClickListener {
             val intent = Intent(
                 this,
-                TeacherEditStudentAttendanceActivity::class.java
+                ClassAttendanceActivity::class.java
             )
             startActivity(intent)
         }

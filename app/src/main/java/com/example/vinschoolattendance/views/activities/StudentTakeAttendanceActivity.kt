@@ -14,17 +14,25 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.example.vinschoolattendance.StudentActivity
+import com.example.vinschoolattendance.viewmodels.StudentViewModel
 import com.example.vinschoolattendance.views.base.IBaseView
 import com.google.zxing.Result
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 
-class StudentTakeAttendanceActivity : AppCompatActivity(), ZXingScannerView.ResultHandler, IBaseView {
-
+class StudentTakeAttendanceActivity : AppCompatActivity(), ZXingScannerView.ResultHandler,
+    IBaseView {
+    private val SUCCESS_MESSAGE = "Điểm danh thành công"
+    private val ERROR_MESSAGE = "Điểm danh thất bại"
+    lateinit private var mViewModel: StudentViewModel
     private var scannerView: ZXingScannerView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         scannerView = ZXingScannerView(this)
         setContentView(scannerView)
+
         val currentApiVersion = Build.VERSION.SDK_INT
         if (currentApiVersion >= Build.VERSION_CODES.M) {
             if (checkPermission()) {
@@ -40,11 +48,32 @@ class StudentTakeAttendanceActivity : AppCompatActivity(), ZXingScannerView.Resu
     }
 
     override fun initEvent() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun setUpViewModel() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        mViewModel = ViewModelProviders.of(this).get(StudentViewModel::class.java)
+        mViewModel.getStudentTakeAttendStatus().observe(this, Observer {
+            //diem danh thanh cong
+            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+            builder.setTitle("Message")
+            if (it == StudentViewModel.TAKE_SUCCESS) {
+                builder.setPositiveButton("OK",
+                    { dialog, which ->
+                        val intent = Intent(this, StudentActivity::class.java)
+                        startActivity(intent)
+                    })
+                builder.setMessage(SUCCESS_MESSAGE)
+            } else {
+                builder.setPositiveButton("OK",
+                    { dialog, which ->
+                        val intent = Intent(this, StudentActivity::class.java)
+                        startActivity(intent)
+                    })
+                builder.setMessage(ERROR_MESSAGE)
+            }
+            val alert1: AlertDialog = builder.create()
+            alert1.show()
+        })
     }
 
     private fun checkPermission(): Boolean {
@@ -139,21 +168,11 @@ class StudentTakeAttendanceActivity : AppCompatActivity(), ZXingScannerView.Resu
     }
 
     override fun handleResult(result: Result) {
-        val myResult = result.text
+        val mScheduleId: Int = result.text.toInt()
         Log.d("QRCodeScanner", result.text)
         Log.d("QRCodeScanner", result.barcodeFormat.toString())
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setTitle("Scan Result")
-        builder.setPositiveButton("OK",
-            DialogInterface.OnClickListener { dialog, which -> scannerView?.resumeCameraPreview(this) })
-        builder.setNeutralButton("Visit",
-            DialogInterface.OnClickListener { dialog, which ->
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(myResult))
-                startActivity(browserIntent)
-            })
-        builder.setMessage(result.text)
-        val alert1: AlertDialog = builder.create()
-        alert1.show()
+        setUpViewModel()
+        mViewModel.takeAttendance(3, 4)
     }
 
     companion object {

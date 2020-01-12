@@ -2,51 +2,97 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="80dp"
+    android:layout_margin="5dp"
+    android:background="@drawable/schedule_roundcornor_background"
     android:orientation="horizontal"
     android:weightSum="5">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_avatar"
-        android:padding="5dp"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:background="@drawable/side_border_background"
+        android:padding="5dp"
         android:src="@drawable/ngoc_trinh">
 
     </de.hdodenhof.circleimageview.CircleImageView>
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:text="Phan Duy Vy"
-        android:gravity="center"
-        android:textSize="25sp">
 
-    </TextView>
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:weightSum="2"
-        android:orientation="horizontal">
+        android:layout_weight="2.7"
+        android:orientation="vertical"
+        android:weightSum="3"
+        >
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:background="@drawable/side_border_background"
+            android:gravity="center"
+            android:text="Phan Duy Vy"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
+            >
+        </TextView>
+        <TextView
+            android:id="@+id/tv_update_status"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/side_border_background"
+            android:gravity="center"
+            android:text="Phan Duy Vy"
+            android:textColor="@color/colorAccent"
+            android:textSize="10sp"
+            android:visibility="invisible">
+        </TextView>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.3"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
         <ImageView
             android:id="@+id/img_attend"
-            android:padding="15dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:padding="10dp"
             android:src="@drawable/v_tick">
 
         </ImageView>
+
         <ImageView
             android:id="@+id/img_not_attend"
-            android:padding="15dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:padding="10dp"
             android:src="@drawable/x_tick">
 
         </ImageView>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_student_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/tv_schedule_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible">
+
+    </TextView>
 </LinearLayout>

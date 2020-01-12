@@ -70,6 +70,8 @@ class StudentScheduleResponse {
         sc.subjectTime = "1 hour 30 minutes"
         sc.teacher = this.teacher
         sc.friendAttends = listStudentAttend
+        sc.date = this.date
+        sc.timeStart = this.timeStart
         return sc
     }
 }

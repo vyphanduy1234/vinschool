@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.example.vinschoolattendance.views.activities.TeacherAddScheduleActivity
+import com.example.vinschoolattendance.views.fragment.TeacherAddScheduleFragment
 import com.example.vinschoolattendance.views.base.IBaseView
 import com.example.vinschoolattendance.views.fragment.TeacherProfileFragment
 import com.example.vinschoolattendance.views.fragment.TeacherScheduleFragment
@@ -74,7 +74,7 @@ class TeacherActivity : AppCompatActivity(), IBaseView {
             }
             ADD_SCHEDULE -> {
                 fragment =
-                    TeacherAddScheduleActivity()
+                    TeacherAddScheduleFragment()
                 fragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, fragment!!)
                     .commit()

@@ -13,8 +13,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.appsnipp.creativelogindesigns.model.StudentSchedule
 import com.bumptech.glide.Glide
 import com.example.vinschoolattendance.R
+import com.example.vinschoolattendance.utils.ScheduleStatus
 import com.example.vinschoolattendance.views.activities.StudentTakeAttendanceActivity
 import kotlinx.android.synthetic.main.item_student_schedule.view.*
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class StudentScheduleAdapter(var listSchedule: MutableList<StudentSchedule>, var context: Context) :
     RecyclerView.Adapter<StudentScheduleAdapter.StudentScheduleViewHolder>() {
@@ -56,13 +61,19 @@ class StudentScheduleAdapter(var listSchedule: MutableList<StudentSchedule>, var
             }
         }
         holder.itemView.tv_class.text = "Class: " + studentSchedule.cclass
-        holder.itemView.btn_student_take_attend.setOnClickListener {
-            val intent: Intent = Intent(context, StudentTakeAttendanceActivity::class.java)
-            context.startActivity(intent)
+        if(ScheduleStatus.canTakeAttend(studentSchedule.timeStart,studentSchedule.date)){
+            holder.itemView.btn_student_take_attend.setOnClickListener {
+                val intent: Intent = Intent(context, StudentTakeAttendanceActivity::class.java)
+                context.startActivity(intent)
+            }
+        }else{
+            holder.itemView.btn_student_take_attend.text = "Started"
+            holder.itemView.btn_student_take_attend.isEnabled = false
         }
 
         loadImageStudentAttend(holder, studentSchedule)
     }
+
 
     private fun loadImageStudentAttend(
         holder: StudentScheduleViewHolder,

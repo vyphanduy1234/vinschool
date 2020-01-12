@@ -1,6 +1,8 @@
 package com.example.vinschoolattendance.views.fragment
 
 
+import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -19,13 +22,16 @@ import com.example.vinschoolattendance.adapters.TeacherScheduleAdapter
 import com.example.vinschoolattendance.models.entities.TeacherSchedule
 import com.example.vinschoolattendance.network.Network
 import com.example.vinschoolattendance.viewmodels.TeacherViewModel
+import com.example.vinschoolattendance.views.activities.ClassAttendanceActivity
+import com.example.vinschoolattendance.views.activities.TeacherTakeAttendanceActivity
 import com.example.vinschoolattendance.views.base.IBaseView
+import kotlinx.android.synthetic.main.fragment_student_schedule.view.*
 import kotlinx.android.synthetic.main.fragment_teacher_schedule.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class TeacherScheduleFragment : Fragment(), IBaseView {
+class TeacherScheduleFragment : Fragment(), IBaseView,TeacherScheduleAdapter.TeacherScheduleListener {
 
     lateinit var mRecyclerView: RecyclerView
     lateinit var mTeacherScheduleAdapter: TeacherScheduleAdapter
@@ -37,20 +43,31 @@ class TeacherScheduleFragment : Fragment(), IBaseView {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view: View = inflater.inflate(R.layout.fragment_teacher_schedule, container, false)
-        mProgressBar = view.findViewById(R.id.progress_bar)
-        tvErrorLoading = view.findViewById(R.id.tv_internet_error)
+        var mView: View = inflater.inflate(R.layout.fragment_teacher_schedule, container, false)
+        mProgressBar = mView.findViewById(R.id.progress_bar)
+        tvErrorLoading = mView.findViewById(R.id.tv_internet_error)
         mProgressBar.visibility = View.VISIBLE
         tvErrorLoading.visibility = View.INVISIBLE
-        initRecycleView(view!!)
+
+        mView.btn_pick_a_date.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(
+                context,
+                DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
+                    Toast.makeText(context,"year: $year month: $month day: $day", Toast.LENGTH_LONG)
+                }, 0, 0, 0
+            )
+            datePickerDialog.show()
+        }
+
+        initRecycleView(mView!!)
         setUpViewModel()
-        return view
+        return mView
     }
 
     private fun initRecycleView(view: View) {
         mRecyclerView = view.findViewById(R.id.rcv_teacher_schedule)
        var list = mutableListOf<TeacherSchedule>()
-        mTeacherScheduleAdapter = TeacherScheduleAdapter(list, context!!)
+        mTeacherScheduleAdapter = TeacherScheduleAdapter(list, context!!,this)
         mRecyclerView.layoutManager = LinearLayoutManager(context)
         mRecyclerView.adapter = mTeacherScheduleAdapter
 
@@ -82,6 +99,24 @@ class TeacherScheduleFragment : Fragment(), IBaseView {
                 tvErrorLoading.visibility = View.INVISIBLE
             }
         })
+    }
+
+    override fun onEditClassAttendance(scheduleId: Int) {
+        val intent = Intent(
+            context,
+            ClassAttendanceActivity::class.java
+        )
+        intent.putExtra("schedule_id", scheduleId)
+        context!!.startActivity(intent)
+    }
+
+    override fun onTakeClassAttendance(scheduleId: Int) {
+        val intent = Intent(
+            context,
+            TeacherTakeAttendanceActivity::class.java
+        )
+        intent.putExtra("schedule_id", scheduleId)
+        context!!.startActivity(intent)
     }
 
 }

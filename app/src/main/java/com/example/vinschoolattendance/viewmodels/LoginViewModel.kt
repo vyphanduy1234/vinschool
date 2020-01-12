@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.appsnipp.creativelogindesigns.model.StudentSchedule
 
-class LoginViewModel: ViewModel() {
+class LoginViewModel: BaseViewModel() {
 
     private var listStudentSchedule: MutableLiveData<List<StudentSchedule>>? = null
 
