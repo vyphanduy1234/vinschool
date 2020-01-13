@@ -29,8 +29,8 @@ class StudentViewModel : BaseViewModel() {
 
     fun getStudentTakeAttendStatus() = _studentTakeAttendStatus
 
-    fun loadStudentSchedule() {
-         StudentRepository.fetchStudentSchedule()
+    fun loadStudentSchedule(date: String) {
+         StudentRepository.fetchStudentSchedule(date)
              .timeout(Network.NETWORK_CONNECT_TIME_OUT, TimeUnit.SECONDS)
              .observeOn(AndroidSchedulers.mainThread())
              .subscribeOn(Schedulers.io())

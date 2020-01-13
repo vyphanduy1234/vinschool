@@ -66,13 +66,12 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_gravity="center_horizontal"
-        android:text="check attendance"
+        android:text="Check"
         android:layout_alignParentRight="true"
         android:layout_marginRight="50dp"
         android:enabled="false"></Button>
 </RelativeLayout>
-
-    </LinearLayout>
+</LinearLayout>
 
 
     <ImageView

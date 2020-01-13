@@ -15,7 +15,7 @@ object TeacherRepository {
 
     fun fetchTeacherSchedule(): Observable<List<TeacherSchedule>> {
         val service: ApiServices = ApiUtils.getApiService()
-        return service.getTeacherSchedule(1,"2020-01-08")
+        return service.getTeacherSchedule(1,"2020-01-14")
             .map { items -> items.map { item -> item.toTeacherSchedule() } }
     }
 

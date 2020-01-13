@@ -24,6 +24,7 @@ import com.example.vinschoolattendance.viewmodels.StudentViewModel
 import com.example.vinschoolattendance.views.base.IBaseView
 import kotlinx.android.synthetic.main.fragment_student_schedule.view.*
 import kotlinx.android.synthetic.main.fragment_teacher_schedule.*
+import java.util.*
 
 
 /**
@@ -78,7 +79,9 @@ class StudentScheduleFragment : Fragment(), IBaseView {
     override fun setUpViewModel() {
         mStudentViewModel = ViewModelProviders.of(this).get(StudentViewModel::class.java)
         //load data tu server ve
-        mStudentViewModel.loadStudentSchedule()
+        val today = Date()
+
+        mStudentViewModel.loadStudentSchedule("${today.year}-${today.month}-${today.day}")
         // mStudentScheduleAdapter.listSchedule = mStudentViewModel.getListStudentSchedule().value
         //lang nghe su kien thay doi
         val studentScheduleObserver = Observer<MutableList<StudentSchedule>> { StudentSchedule ->

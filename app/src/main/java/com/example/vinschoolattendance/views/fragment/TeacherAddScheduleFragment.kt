@@ -80,7 +80,10 @@ class TeacherAddScheduleFragment : Fragment(), IBaseView {
             val datePickerDialog = DatePickerDialog(
                 context,
                 DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
-                    mTvPickDate.text = "$year-${month + 1}-$day"
+                    val month2 = month +1
+                    val mMonth: String = if(month2.toString().length == 1) "0" + month2 else "$month2"
+                    val mDay: String = if(day.toString().length == 1) "0" + day else "$day"
+                    mTvPickDate.text = "$year-$mMonth-$mDay"
                 }, year, month, day
             )
             datePickerDialog.show()

@@ -12,6 +12,10 @@ interface ApiServices {
     @GET("/api/student/schedule/{sid}")
     fun getStudentSchedule(@Path("sid") sid: Int, @Query("date") date: String): Observable<MutableList<StudentScheduleResponse>>
 
+    @POST("/api/teacher")
+    @Headers("Content-Type: application/json")
+    fun login(@Body scheduleReq: ScheduleRegisterRequest): Completable
+
     @GET("/api/teacher/schedule/{tid}")
     fun getTeacherSchedule(@Path("tid") tid: Int, @Query("date") date: String): Observable<MutableList<TeacherScheduleResponse>>
 
