@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.vinschoolattendance.views.fragment.TeacherAddScheduleFragment
 import com.example.vinschoolattendance.views.base.IBaseView
+import com.example.vinschoolattendance.views.fragment.TeacherAddStudentFragment
 import com.example.vinschoolattendance.views.fragment.TeacherProfileFragment
 import com.example.vinschoolattendance.views.fragment.TeacherScheduleFragment
 
@@ -16,6 +17,7 @@ class TeacherActivity : AppCompatActivity(), IBaseView {
     private val PROFILE: String = "profile"
     private val SCHEDULE: String = "schedule"
     private val ADD_SCHEDULE: String = "add_schedule"
+    private val ADD_STUDENT: String = "add_student"
     private var fragment: Fragment? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,15 +43,19 @@ class TeacherActivity : AppCompatActivity(), IBaseView {
             when (id) {
                 R.id.t_profile -> {
                     setTabNavigation(fragmentManager, PROFILE)
-                    Log.d("vy","profile_teacher")
+                    Log.d("vy", "profile_teacher")
                 }
                 R.id.t_schedule -> {
                     setTabNavigation(fragmentManager, SCHEDULE)
-                    Log.d("vy","schedule_teacher")
+                    Log.d("vy", "schedule_teacher")
                 }
-                R.id.yt_add_schedule -> {
+                R.id.t_add_schedule -> {
                     setTabNavigation(fragmentManager, ADD_SCHEDULE)
-                    Log.d("vy","schedule_teacher")
+                    Log.d("vy", "schedule_teacher")
+                }
+                R.id.t_add_student -> {
+                    setTabNavigation(fragmentManager, ADD_STUDENT)
+                    Log.d("vy", "schedule_teacher")
                 }
             }
         }
@@ -75,6 +81,13 @@ class TeacherActivity : AppCompatActivity(), IBaseView {
             ADD_SCHEDULE -> {
                 fragment =
                     TeacherAddScheduleFragment()
+                fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, fragment!!)
+                    .commit()
+            }
+            ADD_STUDENT -> {
+                fragment =
+                    TeacherAddStudentFragment()
                 fragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, fragment!!)
                     .commit()

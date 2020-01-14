@@ -18,13 +18,17 @@ class StudentClassAdapter(
     var attendanceChangeListener: onAttendanceChange
 ) : RecyclerView.Adapter<StudentClassAdapter.StudentClassViewHolder>() {
 
-    companion object{
+    companion object {
         private val CAN_CHANGE_STATUS = 1
         private val CANNOT_CHANGE_STATUS = 2
+        private val ATTEND = true
+        private val ABSENT = false
     }
 
     inner class StudentClassViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var oldPresent = true
     }
+
 
     interface onAttendanceChange {
         fun changeToAttend(sid: Int, scheduleId: Int)
@@ -38,6 +42,7 @@ class StudentClassAdapter(
         holder.itemView.tv_student_id.text = "${studentClass.id}"
         holder.itemView.tv_schedule_id.text = "${studentClass.scheduleId}"
         studentClass.isAttend?.let {
+            holder.oldPresent = studentClass.isAttend
             when (it) {
                 true -> {
                     holder.itemView.img_attend.setImageResource(R.drawable.v_tick)
@@ -58,7 +63,11 @@ class StudentClassAdapter(
                         im.setTag(CANNOT_CHANGE_STATUS)
                         holder.itemView.img_not_attend.setImageResource(R.drawable.na_check)
                         holder.itemView.img_not_attend.setTag(CAN_CHANGE_STATUS)
-
+                        if (holder.oldPresent == ATTEND) {
+                            holder.itemView.tv_update_status.visibility = View.INVISIBLE
+                        } else {
+                            holder.itemView.tv_update_status.visibility = View.VISIBLE
+                        }
                         attendanceChangeListener.changeToAttend(
                             studentClass.id,
                             studentClass.scheduleId
@@ -75,7 +84,13 @@ class StudentClassAdapter(
                         im.setTag(CANNOT_CHANGE_STATUS)
                         holder.itemView.img_attend.setImageResource(R.drawable.na_check)
                         holder.itemView.img_attend.setTag(CAN_CHANGE_STATUS)
+                        holder.itemView.tv_update_status.visibility = View.VISIBLE
+                        if (holder.oldPresent == ABSENT) {
+                            holder.itemView.tv_update_status.visibility = View.INVISIBLE
+                        } else {
+                            holder.itemView.tv_update_status.visibility = View.VISIBLE
 
+                        }
                         attendanceChangeListener.changeToNotAttend(
                             studentClass.id,
                             studentClass.scheduleId

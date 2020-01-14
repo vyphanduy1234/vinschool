@@ -10,8 +10,8 @@
     tools:context=".LoginActivity">
 
     <include
-        android:id="@+id/layout_login"
-        layout="@layout/layout_login"
+        android:id="@+id/layout_register"
+        layout="@layout/layout_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"

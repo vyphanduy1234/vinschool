@@ -19,9 +19,9 @@ import java.util.logging.LogManager
 
 object StudentRepository {
 
-      fun  fetchStudentSchedule(date: String): Observable<List<StudentSchedule>> {
+      fun  fetchStudentSchedule(sid: Int,date: String): Observable<List<StudentSchedule>> {
         val service: ApiServices = ApiUtils.getApiService()
-         return service.getStudentSchedule(2, date)
+         return service.getStudentSchedule(sid, date)
              .map {
                  it.map {item -> item.toStudentSchedule()}
              }

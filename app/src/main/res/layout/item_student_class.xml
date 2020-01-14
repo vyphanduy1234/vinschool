@@ -44,7 +44,7 @@
             android:layout_weight="1"
             android:background="@drawable/side_border_background"
             android:gravity="center"
-            android:text="Phan Duy Vy"
+            android:text="Updated"
             android:textColor="@color/colorAccent"
             android:textSize="10sp"
             android:visibility="invisible">

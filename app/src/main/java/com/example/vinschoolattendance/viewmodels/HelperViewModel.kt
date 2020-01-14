@@ -47,6 +47,17 @@ class HelperViewModel : BaseViewModel() {
 
     fun getRegisterScheduleStatus() = _registerScheduleStatus
 
+    fun loadClass(){
+        //load class
+        HelperRepository.fetchClass()
+            .timeout(Network.NETWORK_CONNECT_TIME_OUT, TimeUnit.SECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                _listClass.value = it
+            }, this::onConnectError)
+    }
+
     fun loadResource() {
         //load subject
         HelperRepository.fetchSubject()
@@ -132,5 +143,16 @@ class HelperViewModel : BaseViewModel() {
                 this.onConnectError(it)
                 _registerScheduleStatus.value = REGISTER_FAIL
             })
+    }
+
+    fun addNewStudent(studentRequest: StudentRequest){
+        HelperRepository.addNewStudent(studentRequest)
+            .timeout(Network.NETWORK_CONNECT_TIME_OUT,TimeUnit.SECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+
+            },this::onConnectError)
+
     }
 }

@@ -49,4 +49,15 @@
 
     </TextView>
 
+    <TextView
+        android:id="@+id/tv_no_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:text="No Schedule"
+        android:layout_gravity="center"
+        android:visibility="invisible">
+
+    </TextView>
+
 </FrameLayout>

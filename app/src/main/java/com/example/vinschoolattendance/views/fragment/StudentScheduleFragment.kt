@@ -20,10 +20,15 @@ import com.appsnipp.creativelogindesigns.model.StudentSchedule
 import com.example.vinschoolattendance.R
 import com.example.vinschoolattendance.adapters.StudentScheduleAdapter
 import com.example.vinschoolattendance.network.Network
+import com.example.vinschoolattendance.utils.DateTime
+import com.example.vinschoolattendance.utils.UserAuthen
 import com.example.vinschoolattendance.viewmodels.StudentViewModel
 import com.example.vinschoolattendance.views.base.IBaseView
+import kotlinx.android.synthetic.main.fragment_student_schedule.*
 import kotlinx.android.synthetic.main.fragment_student_schedule.view.*
 import kotlinx.android.synthetic.main.fragment_teacher_schedule.*
+import kotlinx.android.synthetic.main.fragment_teacher_schedule.progress_bar
+import java.time.LocalDate
 import java.util.*
 
 
@@ -49,16 +54,7 @@ class StudentScheduleFragment : Fragment(), IBaseView {
         mProgressBar.visibility = View.VISIBLE
         tvErrorLoading.visibility = View.INVISIBLE
 
-        mView.btn_pick_a_date.setOnClickListener {
-            val datePickerDialog = DatePickerDialog(
-                context,
-                OnDateSetListener { datePicker, year, month, day ->
-                    Toast.makeText(context,"year: $year month: $month day: $day",Toast.LENGTH_LONG)
-                }, 0, 0, 0
-            )
-            datePickerDialog.show()
-        }
-
+        initEvent()
         initRecyleView()
         setUpViewModel()
         return mView
@@ -69,19 +65,39 @@ class StudentScheduleFragment : Fragment(), IBaseView {
         mRecyclerView = mView.findViewById(R.id.rcv_student_schedule)
         mRecyclerView.layoutManager = LinearLayoutManager(context)
         mRecyclerView.adapter = mStudentScheduleAdapter
-        mRecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        mRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
     }
 
     override fun initEvent() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val cldr: Calendar = Calendar.getInstance()
+        val day: Int = cldr.get(Calendar.DAY_OF_MONTH)
+        val month: Int = cldr.get(Calendar.MONTH)
+        val year: Int = cldr.get(Calendar.YEAR)
+
+        mView.btn_pick_a_date.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(
+                context,
+                OnDateSetListener { datePicker, year, month, day ->
+                    val date = DateTime.NormalizeDate(year, month, day)
+                    mStudentViewModel.loadStudentSchedule(UserAuthen.ID,date)
+                    progress_bar.visibility = View.VISIBLE
+                }, year, month, day
+            )
+            datePickerDialog.show()
+        }
+
     }
 
     override fun setUpViewModel() {
         mStudentViewModel = ViewModelProviders.of(this).get(StudentViewModel::class.java)
         //load data tu server ve
-        val today = Date()
-
-        mStudentViewModel.loadStudentSchedule("${today.year}-${today.month}-${today.day}")
+        val today: String = DateTime.getDateToday()
+        mStudentViewModel.loadStudentSchedule(UserAuthen.ID,today)
         // mStudentScheduleAdapter.listSchedule = mStudentViewModel.getListStudentSchedule().value
         //lang nghe su kien thay doi
         val studentScheduleObserver = Observer<MutableList<StudentSchedule>> { StudentSchedule ->
@@ -91,11 +107,11 @@ class StudentScheduleFragment : Fragment(), IBaseView {
         }
         mStudentViewModel.getListStudentSchedule().observe(this, studentScheduleObserver)
 
-        mStudentViewModel.getInternetStatus().observe(this,Observer<Int>{error ->
-            if(error == Network.NETWORK_CONNECT_ERROR){
+        mStudentViewModel.getInternetStatus().observe(this, Observer<Int> { error ->
+            if (error == Network.NETWORK_CONNECT_ERROR) {
                 progress_bar.visibility = View.GONE
                 tvErrorLoading.visibility = View.VISIBLE
-            }else{
+            } else {
                 tvErrorLoading.visibility = View.INVISIBLE
             }
         })

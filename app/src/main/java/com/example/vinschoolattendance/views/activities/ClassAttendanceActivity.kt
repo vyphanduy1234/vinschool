@@ -2,9 +2,7 @@ package com.example.vinschoolattendance.views.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +20,8 @@ class ClassAttendanceActivity : AppCompatActivity(), IBaseView,
     lateinit private var mViewModel: ClassAttendaceViewModel
     private var listStudent: MutableList<StudentOfClass> = mutableListOf()
     lateinit private var studentClassAdapter: StudentClassAdapter
+    private val PRESENT = true
+    private val ABSENT = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,10 +40,11 @@ class ClassAttendanceActivity : AppCompatActivity(), IBaseView,
     }
 
     override fun changeToAttend(sid: Int, scheduleId: Int) {
-
+        mViewModel.editStudentAttend(sid,scheduleId,PRESENT)
     }
 
     override fun changeToNotAttend(sid: Int, scheduleId: Int) {
+        mViewModel.editStudentAttend(sid,scheduleId,ABSENT)
     }
 
     override fun initEvent() {
@@ -55,7 +56,7 @@ class ClassAttendanceActivity : AppCompatActivity(), IBaseView,
             .get(ClassAttendaceViewModel::class.java)
 
         val scheduleID: Int = intent.getIntExtra("schedule_id", -1)
-        mViewModel.loadClassSchedule(scheduleID)
+        mViewModel.loadClassAttend(scheduleID)
         mViewModel.getListClassAttendance().observe(this, Observer {
             studentClassAdapter.listStudentClass = it
             studentClassAdapter.notifyDataSetChanged()

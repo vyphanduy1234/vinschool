@@ -53,4 +53,8 @@ object HelperRepository {
         return service.registerSchedule(scheduleReq)
     }
 
+    fun addNewStudent(studentRequest: StudentRequest): Completable{
+        return service.addNewStudent(studentRequest)
+    }
+
 }

@@ -21,43 +21,43 @@ import com.example.vinschoolattendance.R
 import com.example.vinschoolattendance.adapters.TeacherScheduleAdapter
 import com.example.vinschoolattendance.models.entities.TeacherSchedule
 import com.example.vinschoolattendance.network.Network
+import com.example.vinschoolattendance.utils.DateTime
+import com.example.vinschoolattendance.utils.UserAuthen
 import com.example.vinschoolattendance.viewmodels.TeacherViewModel
 import com.example.vinschoolattendance.views.activities.ClassAttendanceActivity
 import com.example.vinschoolattendance.views.activities.TeacherTakeAttendanceActivity
 import com.example.vinschoolattendance.views.base.IBaseView
 import kotlinx.android.synthetic.main.fragment_student_schedule.view.*
 import kotlinx.android.synthetic.main.fragment_teacher_schedule.*
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class TeacherScheduleFragment : Fragment(), IBaseView,TeacherScheduleAdapter.TeacherScheduleListener {
+class TeacherScheduleFragment : Fragment(), IBaseView,
+    TeacherScheduleAdapter.TeacherScheduleListener {
 
     lateinit var mRecyclerView: RecyclerView
     lateinit var mTeacherScheduleAdapter: TeacherScheduleAdapter
     lateinit var mViewModel: TeacherViewModel
     lateinit var mProgressBar: ProgressBar
     lateinit var tvErrorLoading: TextView
+    lateinit var tvNoData: TextView
+    lateinit var mView: View
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var mView: View = inflater.inflate(R.layout.fragment_teacher_schedule, container, false)
+        mView = inflater.inflate(R.layout.fragment_teacher_schedule, container, false)
         mProgressBar = mView.findViewById(R.id.progress_bar)
         tvErrorLoading = mView.findViewById(R.id.tv_internet_error)
+        tvNoData = mView.findViewById(R.id.tv_no_data)
         mProgressBar.visibility = View.VISIBLE
         tvErrorLoading.visibility = View.INVISIBLE
+        tvNoData.visibility = View.INVISIBLE
 
-        mView.btn_pick_a_date.setOnClickListener {
-            val datePickerDialog = DatePickerDialog(
-                context,
-                DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
-                    Toast.makeText(context,"year: $year month: $month day: $day", Toast.LENGTH_LONG)
-                }, 0, 0, 0
-            )
-            datePickerDialog.show()
-        }
+        initEvent()
 
         initRecycleView(mView!!)
         setUpViewModel()
@@ -66,36 +66,61 @@ class TeacherScheduleFragment : Fragment(), IBaseView,TeacherScheduleAdapter.Tea
 
     private fun initRecycleView(view: View) {
         mRecyclerView = view.findViewById(R.id.rcv_teacher_schedule)
-       var list = mutableListOf<TeacherSchedule>()
-        mTeacherScheduleAdapter = TeacherScheduleAdapter(list, context!!,this)
+        var list = mutableListOf<TeacherSchedule>()
+        mTeacherScheduleAdapter = TeacherScheduleAdapter(list, context!!, this)
         mRecyclerView.layoutManager = LinearLayoutManager(context)
         mRecyclerView.adapter = mTeacherScheduleAdapter
 
-        mRecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        mRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
     }
 
     override fun initEvent() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val cldr: Calendar = Calendar.getInstance()
+        val day: Int = cldr.get(Calendar.DAY_OF_MONTH)
+        val month: Int = cldr.get(Calendar.MONTH)
+        val year: Int = cldr.get(Calendar.YEAR)
+
+        mView.btn_pick_a_date.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(
+                context,
+                DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
+                    val date = DateTime.NormalizeDate(year, month, day)
+                    mViewModel.loadTeacherSchedule(UserAuthen.ID,date)
+                    tvNoData.visibility = View.INVISIBLE
+                    progress_bar.visibility = View.VISIBLE
+                }, year, month, day
+            )
+            datePickerDialog.show()
+        }
     }
 
     override fun setUpViewModel() {
 
         mViewModel = ViewModelProviders.of(this).get(TeacherViewModel::class.java)
-        mViewModel.loadTeacherSchedule()
-        val observer: Observer<MutableList<TeacherSchedule>> = Observer<MutableList<TeacherSchedule>> {
-            teacherSchedule ->
-            mTeacherScheduleAdapter.listSchedule = teacherSchedule
-            mTeacherScheduleAdapter.notifyDataSetChanged()
-            progress_bar.visibility = View.GONE
+        val today: String = DateTime.getDateToday()
+        mViewModel.loadTeacherSchedule(UserAuthen.ID,today)
+        val observer: Observer<MutableList<TeacherSchedule>> =
+            Observer<MutableList<TeacherSchedule>> { teacherSchedule ->
+                if(teacherSchedule.size == 0){
+                    tvNoData.visibility = View.VISIBLE
+                }
+                mTeacherScheduleAdapter.listSchedule = teacherSchedule
+                mTeacherScheduleAdapter.notifyDataSetChanged()
+                progress_bar.visibility = View.GONE
+            }
+        mViewModel.getTeacherSchedule().observe(this, observer)
 
-        }
-        mViewModel.getTeacherSchedule().observe(this,observer)
-
-        mViewModel.getInternetStatus().observe(this,Observer<Int>{error ->
-            if(error == Network.NETWORK_CONNECT_ERROR){
+        mViewModel.getInternetStatus().observe(this, Observer<Int> { error ->
+            if (error == Network.NETWORK_CONNECT_ERROR) {
+                tvNoData.visibility = View.INVISIBLE
                 progress_bar.visibility = View.GONE
                 tvErrorLoading.visibility = View.VISIBLE
-            }else{
+            } else {
                 tvErrorLoading.visibility = View.INVISIBLE
             }
         })

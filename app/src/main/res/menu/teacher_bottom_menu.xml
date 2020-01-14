@@ -12,8 +12,13 @@
         android:title="Profile"
         app:cnb_iconColor="@color/colorPrimaryDark" />
     <item
-        android:id="@+id/yt_add_schedule"
+        android:id="@+id/t_add_schedule"
         android:icon="@drawable/right_tick"
         android:title="Profile"
+        app:cnb_iconColor="@color/colorPrimaryDark" />
+    <item
+        android:id="@+id/t_add_student"
+        android:icon="@drawable/right_tick"
+        android:title="Add"
         app:cnb_iconColor="@color/colorPrimaryDark" />
 </menu>

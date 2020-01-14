@@ -29,7 +29,9 @@ object ScheduleStatus {
                     )
                 )
             val now = LocalTime.now()
-            if (mTime.hour <= now.hour && mTime.minute<= now.minute) {
+            if (now.hour > mTime.hour) {
+                return true
+            }else if(mTime.hour == now.hour && now.minute > mTime.minute){
                 return true
             }
         }

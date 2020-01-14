@@ -12,9 +12,9 @@ interface ApiServices {
     @GET("/api/student/schedule/{sid}")
     fun getStudentSchedule(@Path("sid") sid: Int, @Query("date") date: String): Observable<MutableList<StudentScheduleResponse>>
 
-    @POST("/api/teacher")
+    @POST("/api/login")
     @Headers("Content-Type: application/json")
-    fun login(@Body scheduleReq: ScheduleRegisterRequest): Completable
+    fun login(@Body loginRequest: LoginRequest): Observable<UserResponse>
 
     @GET("/api/teacher/schedule/{tid}")
     fun getTeacherSchedule(@Path("tid") tid: Int, @Query("date") date: String): Observable<MutableList<TeacherScheduleResponse>>
@@ -32,11 +32,17 @@ interface ApiServices {
     fun takeAttendanceForStudent(@Path("id") id: Int,@Query("schedule_id") scheduleId: Int): Completable
 
     @PUT("/api/student/attendance/{id}")
-    fun editAttendanceForStudent(@Path("id") id: Int,@Query("schedule_id") scheduleId: Int): Completable
+    fun editAttendanceForStudent(@Path("id") id: Int
+                                 ,@Query("scheduleId") scheduleId: Int,
+                                 @Query("isPresent") isPresent: Boolean): Completable
 
     @POST("/api/teacher")
     @Headers("Content-Type: application/json")
     fun registerSchedule(@Body scheduleReq: ScheduleRegisterRequest): Completable
+
+    @POST("/api/teacher/createUser")
+    @Headers("Content-Type: application/json")
+    fun addNewStudent(@Body studentRequest: StudentRequest): Completable
 
     @GET("/api/teacher/getAllClassInfo")
     fun getAllClass(): Observable<MutableList<ClassResponse>>

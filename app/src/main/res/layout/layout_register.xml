@@ -25,9 +25,20 @@
         android:layout_marginTop="@dimen/loginViewsMargin">
 
         <EditText
-            android:id="@+id/edit_name"
+            android:id="@+id/edt_first_name"
             style="@style/modifiedEditText"
-            android:hint="@string/login_name_hint"
+            android:hint="First Name"
+            android:inputType="textPersonName"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/parent"
+        android:layout_marginTop="@dimen/loginViewsMargin">
+
+        <EditText
+            android:id="@+id/edt_last_name"
+            style="@style/modifiedEditText"
+            android:hint="Last Name"
             android:inputType="textPersonName"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -38,9 +49,9 @@
         android:layout_marginTop="@dimen/loginViewsMargin">
 
         <EditText
-            android:id="@+id/edt_mobile"
+            android:id="@+id/edt_email"
             style="@style/modifiedEditText"
-            android:hint="@string/login_mobile_number_hint"
+            android:hint="Email"
             android:inputType="phone"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -51,9 +62,9 @@
         android:layout_marginTop="@dimen/loginViewsMargin">
 
         <EditText
-            android:id="@+id/edt_email"
+            android:id="@+id/edt_account"
             style="@style/modifiedEditText"
-            android:hint="@string/login_email_hint"
+            android:hint="Account"
             android:inputType="textEmailAddress"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -66,25 +77,29 @@
         <EditText
             android:id="@+id/edt_password"
             style="@style/modifiedEditText"
-            android:hint="@string/login_password_hint"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/parent"
+        app:helperText="Class"
+        android:layout_marginTop="@dimen/loginViewsMargin">
+
+        <Spinner
+            android:id="@+id/spn_class"
+            style="@style/modifiedEditText"
+            android:hint="Password"
             android:inputType="textPassword"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/btn_register"
+        android:id="@+id/btn_add"
         style="@style/loginButton"
-        android:text="Signup"
+        android:text="ADD"
         android:layout_gravity="right"
-        android:layout_marginTop="@dimen/loginViewsMargin"/>
-
-    <TextView
-        android:id="@+id/tv_back_to_login"
-        style="@style/parent"
-        android:textAlignment="textEnd"
-        android:textStyle="bold"
-        android:textColor="@color/primaryTextColor"
-        android:text="@string/signup_login_hint"
         android:layout_marginTop="@dimen/loginViewsMargin"/>
 
 </LinearLayout>

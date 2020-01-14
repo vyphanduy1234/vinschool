@@ -3,6 +3,7 @@ package com.example.vinschoolattendance.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.appsnipp.creativelogindesigns.api.ApiUtils
 import com.example.vinschoolattendance.models.entities.StudentOfClass
 import com.example.vinschoolattendance.models.pojos.ClassAttendanceResponse
 import com.example.vinschoolattendance.repositories.ClassAttendanceRepository
@@ -18,7 +19,7 @@ class ClassAttendaceViewModel : BaseViewModel() {
 
     fun getListClassAttendance() = _listClassAttendance
 
-    fun loadClassSchedule(scheduleId: Int) {
+    fun loadClassAttend(scheduleId: Int) {
         ClassAttendanceRepository.fetchClassAttendance(scheduleId)
             .timeout(Network.NETWORK_CONNECT_TIME_OUT, TimeUnit.SECONDS)
             .observeOn(AndroidSchedulers.mainThread())
@@ -30,4 +31,9 @@ class ClassAttendaceViewModel : BaseViewModel() {
                 }, this::onConnectError
             )
     }
+
+    fun editStudentAttend(sid: Int, scheduleId: Int,isPresent: Boolean){
+        ApiUtils.getApiService().editAttendanceForStudent(sid,scheduleId,isPresent)
+    }
+
 }

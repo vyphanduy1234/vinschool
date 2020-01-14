@@ -17,8 +17,8 @@ class TeacherViewModel : BaseViewModel() {
 
     fun getTeacherSchedule() = _listTeacherSchedule
 
-    fun loadTeacherSchedule() {
-        TeacherRepository.fetchTeacherSchedule()
+    fun loadTeacherSchedule(sid: Int,date: String) {
+        TeacherRepository.fetchTeacherSchedule(sid,date)
             .timeout(Network.NETWORK_CONNECT_TIME_OUT, TimeUnit.SECONDS)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())

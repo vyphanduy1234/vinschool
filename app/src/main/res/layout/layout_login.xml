@@ -52,13 +52,4 @@
         android:layout_gravity="right"
         android:layout_marginTop="@dimen/loginViewsMargin"/>
 
-    <TextView
-        android:id="@+id/tv_register"
-        style="@style/parent"
-        android:textAlignment="textEnd"
-        android:textStyle="bold"
-        android:textColor="@color/primaryTextColor"
-        android:text="@string/login_signup_hint"
-        android:layout_marginTop="@dimen/loginViewsMargin"/>
-
 </LinearLayout>

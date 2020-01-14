@@ -17,6 +17,8 @@ import com.example.vinschoolattendance.viewmodels.HelperViewModel
 import com.example.vinschoolattendance.views.base.IBaseView
 import androidx.lifecycle.Observer
 import com.example.vinschoolattendance.models.pojos.*
+import com.example.vinschoolattendance.utils.DateTime
+import kotlinx.android.synthetic.main.activity_teacher_take_attendace.*
 import kotlinx.android.synthetic.main.fragment_teacher_add_schedule.*
 import java.util.*
 
@@ -80,10 +82,8 @@ class TeacherAddScheduleFragment : Fragment(), IBaseView {
             val datePickerDialog = DatePickerDialog(
                 context,
                 DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
-                    val month2 = month +1
-                    val mMonth: String = if(month2.toString().length == 1) "0" + month2 else "$month2"
-                    val mDay: String = if(day.toString().length == 1) "0" + day else "$day"
-                    mTvPickDate.text = "$year-$mMonth-$mDay"
+                    val date = DateTime.NormalizeDate(year,month,day)
+                    tv_date.text = date
                 }, year, month, day
             )
             datePickerDialog.show()
