@@ -3,13 +3,12 @@ package com.example.vinschoolattendance.views.fragment
 
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -21,14 +20,12 @@ import com.example.vinschoolattendance.R
 import com.example.vinschoolattendance.adapters.StudentScheduleAdapter
 import com.example.vinschoolattendance.network.Network
 import com.example.vinschoolattendance.utils.DateTime
+import com.example.vinschoolattendance.utils.Loader
 import com.example.vinschoolattendance.utils.UserAuthen
 import com.example.vinschoolattendance.viewmodels.StudentViewModel
 import com.example.vinschoolattendance.views.base.IBaseView
-import kotlinx.android.synthetic.main.fragment_student_schedule.*
 import kotlinx.android.synthetic.main.fragment_student_schedule.view.*
-import kotlinx.android.synthetic.main.fragment_teacher_schedule.*
-import kotlinx.android.synthetic.main.fragment_teacher_schedule.progress_bar
-import java.time.LocalDate
+
 import java.util.*
 
 
@@ -37,21 +34,27 @@ import java.util.*
  */
 class StudentScheduleFragment : Fragment(), IBaseView {
     lateinit var mStudentViewModel: StudentViewModel
+
     var mListSchedule: MutableList<StudentSchedule> = mutableListOf()
+
     lateinit var mStudentScheduleAdapter: StudentScheduleAdapter
+
     lateinit var mView: View
+
     lateinit var mRecyclerView: RecyclerView
-    lateinit var mProgressBar: ProgressBar
+
     lateinit var tvErrorLoading: TextView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_student_schedule, container, false)
-        mProgressBar = mView.findViewById(R.id.progress_bar)
         tvErrorLoading = mView.findViewById(R.id.tv_internet_error)
-        mProgressBar.visibility = View.VISIBLE
+
+        Loader.showLoader(activity!!.supportFragmentManager)
+
         tvErrorLoading.visibility = View.INVISIBLE
 
         initEvent()
@@ -85,7 +88,8 @@ class StudentScheduleFragment : Fragment(), IBaseView {
                 OnDateSetListener { datePicker, year, month, day ->
                     val date = DateTime.NormalizeDate(year, month, day)
                     mStudentViewModel.loadStudentSchedule(UserAuthen.ID,date)
-                    progress_bar.visibility = View.VISIBLE
+
+                    Loader.showLoader(activity!!.supportFragmentManager)
                 }, year, month, day
             )
             datePickerDialog.show()
@@ -103,15 +107,16 @@ class StudentScheduleFragment : Fragment(), IBaseView {
         val studentScheduleObserver = Observer<MutableList<StudentSchedule>> { StudentSchedule ->
             mStudentScheduleAdapter.listSchedule = StudentSchedule
             mStudentScheduleAdapter.notifyDataSetChanged()
-            mProgressBar.visibility = View.GONE
+            Loader.hideLoader(activity!!.supportFragmentManager)
         }
         mStudentViewModel.getListStudentSchedule().observe(this, studentScheduleObserver)
 
         mStudentViewModel.getInternetStatus().observe(this, Observer<Int> { error ->
             if (error == Network.NETWORK_CONNECT_ERROR) {
-                progress_bar.visibility = View.GONE
+                Loader.hideLoader(activity!!.supportFragmentManager)
                 tvErrorLoading.visibility = View.VISIBLE
             } else {
+                Loader.hideLoader(activity!!.supportFragmentManager)
                 tvErrorLoading.visibility = View.INVISIBLE
             }
         })

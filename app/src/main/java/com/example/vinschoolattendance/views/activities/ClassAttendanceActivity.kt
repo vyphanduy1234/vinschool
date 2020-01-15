@@ -11,22 +11,33 @@ import com.example.vinschoolattendance.R
 import com.example.vinschoolattendance.adapters.StudentClassAdapter
 import com.example.vinschoolattendance.models.entities.StudentOfClass
 import com.example.vinschoolattendance.network.Network
+import com.example.vinschoolattendance.utils.Loader
 import com.example.vinschoolattendance.viewmodels.ClassAttendaceViewModel
 import com.example.vinschoolattendance.views.base.IBaseView
 import kotlinx.android.synthetic.main.fragment_teacher_schedule.*
 
 class ClassAttendanceActivity : AppCompatActivity(), IBaseView,
     StudentClassAdapter.onAttendanceChange {
+
     lateinit private var mViewModel: ClassAttendaceViewModel
+
     private var listStudent: MutableList<StudentOfClass> = mutableListOf()
+
     lateinit private var studentClassAdapter: StudentClassAdapter
+
     private val PRESENT = true
+
     private val ABSENT = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_teacher_edit_student_attendance)
+
+        Loader.showLoader(supportFragmentManager)
+
         initRecycleView()
+
+        setUpViewModel()
 
     }
 
@@ -36,15 +47,16 @@ class ClassAttendanceActivity : AppCompatActivity(), IBaseView,
         recycleView.layoutManager = LinearLayoutManager(this)
         recycleView.adapter = studentClassAdapter
 
-        setUpViewModel()
     }
 
     override fun changeToAttend(sid: Int, scheduleId: Int) {
-        mViewModel.editStudentAttend(sid,scheduleId,PRESENT)
+        val mScheduleID: Int = intent.getIntExtra("schedule_id", -1)
+        mViewModel.editStudentAttend(sid,mScheduleID,PRESENT)
     }
 
     override fun changeToNotAttend(sid: Int, scheduleId: Int) {
-        mViewModel.editStudentAttend(sid,scheduleId,ABSENT)
+        val mScheduleID: Int = intent.getIntExtra("schedule_id", -1)
+        mViewModel.editStudentAttend(sid,mScheduleID,ABSENT)
     }
 
     override fun initEvent() {
@@ -56,16 +68,17 @@ class ClassAttendanceActivity : AppCompatActivity(), IBaseView,
             .get(ClassAttendaceViewModel::class.java)
 
         val scheduleID: Int = intent.getIntExtra("schedule_id", -1)
+        //load danh sách học sinh của lớp học
         mViewModel.loadClassAttend(scheduleID)
+
         mViewModel.getListClassAttendance().observe(this, Observer {
+            Loader.hideLoader(supportFragmentManager)
             studentClassAdapter.listStudentClass = it
             studentClassAdapter.notifyDataSetChanged()
-            progress_bar.visibility = View.GONE
         })
 
         mViewModel.getInternetStatus().observe(this, Observer<Int> { error ->
             if (error == Network.NETWORK_CONNECT_ERROR) {
-                progress_bar.visibility = View.GONE
                 tv_internet_error.visibility = View.VISIBLE
             } else {
                 tv_internet_error.visibility = View.INVISIBLE

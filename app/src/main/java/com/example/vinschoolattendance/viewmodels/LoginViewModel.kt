@@ -7,6 +7,7 @@ import com.appsnipp.creativelogindesigns.api.ApiUtils
 import com.appsnipp.creativelogindesigns.model.StudentSchedule
 import com.example.vinschoolattendance.models.pojos.LoginRequest
 import com.example.vinschoolattendance.models.pojos.UserResponse
+import com.example.vinschoolattendance.network.Header
 import com.example.vinschoolattendance.network.Network
 import com.example.vinschoolattendance.utils.UserAuthen
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -33,6 +34,10 @@ class LoginViewModel: BaseViewModel() {
     fun isTeacherLogin() = _isTeacherLogin
     fun isStudentLogin() = _isStudentLogin
 
+    /**
+     * đăng nhập
+     * @property loginRequest: chứa tài khoản mâtj khẩu
+     * */
     fun login(loginRequest: LoginRequest){
         ApiUtils.getApiService().login(loginRequest)
             .timeout(Network.NETWORK_CONNECT_TIME_OUT,TimeUnit.SECONDS)
@@ -42,6 +47,7 @@ class LoginViewModel: BaseViewModel() {
                 //luu id va token
                 UserAuthen.ID = it.id
                 UserAuthen.Token = it.token
+                Header.header.put("Authorization",it.token)
                 //kiem tra role la hs hay gv
                 for(item in it.roles){
                     if(item.equals(ROLE_TEACHER)){

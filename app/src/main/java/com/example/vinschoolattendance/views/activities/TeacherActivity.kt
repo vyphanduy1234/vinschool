@@ -14,11 +14,17 @@ import com.example.vinschoolattendance.views.fragment.TeacherScheduleFragment
 import kotlinx.android.synthetic.main.activity_teacher.*
 
 class TeacherActivity : AppCompatActivity(), IBaseView {
+
     private val PROFILE: String = "profile"
+
     private val SCHEDULE: String = "schedule"
+
     private val ADD_SCHEDULE: String = "add_schedule"
+
     private val ADD_STUDENT: String = "add_student"
+
     private var fragment: Fragment? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_teacher)

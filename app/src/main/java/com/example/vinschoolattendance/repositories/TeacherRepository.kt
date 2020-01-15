@@ -13,6 +13,11 @@ import java.util.*
 
 object TeacherRepository {
 
+    /**
+     * lấy thông tin thời khóa biểu của giáo viên theo ngày
+     * @property date: ngày muốn lấy thời khóa biểu
+     * @return danh sách thời khóa biểu dạng observable
+     * */
     fun fetchTeacherSchedule(sid: Int,date: String): Observable<List<TeacherSchedule>> {
         val service: ApiServices = ApiUtils.getApiService()
         return service.getTeacherSchedule(sid,date)

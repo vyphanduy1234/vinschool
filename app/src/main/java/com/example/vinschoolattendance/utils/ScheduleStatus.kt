@@ -6,6 +6,10 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 object ScheduleStatus {
+
+    /**
+     * kiểm tra 1 tiết học đã bắt đầu hay chưa
+     * */
      fun isStarted(time: String, date: String): Boolean {
         val mDate =
             LocalDate.parse(
@@ -38,6 +42,9 @@ object ScheduleStatus {
         return false
     }
 
+    /**
+     * kiểm tra sinh viên còn quyền điểm danh cho 1 tiết học hay không
+     * */
      fun canTakeAttend(time: String, date: String): Boolean {
         val mDate =
             LocalDate.parse(

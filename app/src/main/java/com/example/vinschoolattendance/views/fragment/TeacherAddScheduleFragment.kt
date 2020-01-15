@@ -18,6 +18,7 @@ import com.example.vinschoolattendance.views.base.IBaseView
 import androidx.lifecycle.Observer
 import com.example.vinschoolattendance.models.pojos.*
 import com.example.vinschoolattendance.utils.DateTime
+import com.example.vinschoolattendance.utils.Loader
 import kotlinx.android.synthetic.main.activity_teacher_take_attendace.*
 import kotlinx.android.synthetic.main.fragment_teacher_add_schedule.*
 import java.util.*
@@ -83,7 +84,7 @@ class TeacherAddScheduleFragment : Fragment(), IBaseView {
                 context,
                 DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
                     val date = DateTime.NormalizeDate(year,month,day)
-                    tv_date.text = date
+                    mTvPickDate.text = date
                 }, year, month, day
             )
             datePickerDialog.show()
@@ -91,6 +92,7 @@ class TeacherAddScheduleFragment : Fragment(), IBaseView {
 
         mBtnRegister.setOnClickListener {
             val registerReq = getSpinerValue()
+            Loader.showLoader(activity!!.supportFragmentManager)
             mViewodel.registerSchedule(registerReq)
         }
     }
@@ -160,6 +162,7 @@ class TeacherAddScheduleFragment : Fragment(), IBaseView {
         })
 
         mViewodel.getRegisterScheduleStatus().observe(this, Observer {
+            Loader.hideLoader(activity!!.supportFragmentManager)
             if(it == HelperViewModel.REGISTER_SUCCESS){
                 mTvRegisterFail.visibility = View.INVISIBLE
                 mTvRegisterSuccess.visibility = View.VISIBLE

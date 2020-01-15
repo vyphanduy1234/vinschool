@@ -5,6 +5,9 @@ import com.appsnipp.creativelogindesigns.model.StudentSchedule
 object ApiUtils {
     private val STAGE = "https://attendancecapstone.herokuapp.com"
 
+    /**
+     * tạo retrofit kết nối đến api https://attendancecapstone.herokuapp.com
+     * */
     @JvmStatic
     fun getApiService(): ApiServices{
         return RetrofitClient.getClient(STAGE)!!.create(ApiServices::class.java)

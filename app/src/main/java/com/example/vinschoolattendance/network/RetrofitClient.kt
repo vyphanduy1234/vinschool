@@ -20,6 +20,9 @@ object RetrofitClient {
         .addInterceptor(interceptor)
         .build()
 
+    /**
+     * @return retrofit với các cài đặt về httpok,  ConverterFactory, baseUrl
+     * */
     @JvmStatic
     fun getClient(baseUrl: String?): Retrofit? {
         if (retrofit == null) {

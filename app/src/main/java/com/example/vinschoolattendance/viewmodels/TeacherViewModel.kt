@@ -17,6 +17,10 @@ class TeacherViewModel : BaseViewModel() {
 
     fun getTeacherSchedule() = _listTeacherSchedule
 
+    /**
+     * lấy về thời khóa biểu cho giáo viên
+     * @property date: ngày cần lấy
+     * */
     fun loadTeacherSchedule(sid: Int,date: String) {
         TeacherRepository.fetchTeacherSchedule(sid,date)
             .timeout(Network.NETWORK_CONNECT_TIME_OUT, TimeUnit.SECONDS)

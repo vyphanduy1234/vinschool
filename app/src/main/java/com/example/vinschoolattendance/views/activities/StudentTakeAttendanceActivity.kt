@@ -24,10 +24,15 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView
 
 class StudentTakeAttendanceActivity : AppCompatActivity(), ZXingScannerView.ResultHandler,
     IBaseView {
+
     private val SUCCESS_MESSAGE = "Điểm danh thành công"
+
     private val ERROR_MESSAGE = "Điểm danh thất bại"
+
     lateinit private var mViewModel: StudentViewModel
+
     private var scannerView: ZXingScannerView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         scannerView = ZXingScannerView(this)

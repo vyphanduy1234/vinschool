@@ -7,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 
 import com.example.vinschoolattendance.R
 import com.example.vinschoolattendance.models.pojos.ClassResponse
 import com.example.vinschoolattendance.models.pojos.StudentRequest
+import com.example.vinschoolattendance.utils.Loader
 import com.example.vinschoolattendance.viewmodels.HelperViewModel
 import com.example.vinschoolattendance.views.base.IBaseView
 import kotlinx.android.synthetic.main.layout_register.*
@@ -24,8 +26,11 @@ import kotlinx.android.synthetic.main.layout_register.view.*
 class TeacherAddStudentFragment : Fragment(), IBaseView {
 
     lateinit var mClassAdapter: ArrayAdapter<ClassResponse>
+
     lateinit var mView: View
+
     lateinit var mViewModel: HelperViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,6 +38,7 @@ class TeacherAddStudentFragment : Fragment(), IBaseView {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_teacher_add_student, container, false)
         setUpViewModel()
+        initEvent()
         return mView
     }
 
@@ -45,8 +51,12 @@ class TeacherAddStudentFragment : Fragment(), IBaseView {
             val password = mView.edt_password.text.toString()
             val cclass = (spn_class.selectedItem as ClassResponse).id
 
-            val student = StudentRequest(firstName = firstName,lastName = lastName
-            ,email = email,account = account,password = password,classId = cclass)
+            Loader.showLoader(activity!!.supportFragmentManager)
+
+            val student = StudentRequest(
+                firstName = firstName, lastName = lastName
+                , email = email, account = account, password = password, classId = cclass
+            )
             mViewModel.addNewStudent(student)
         }
     }
@@ -62,6 +72,15 @@ class TeacherAddStudentFragment : Fragment(), IBaseView {
             )
             mView.spn_class.adapter = mClassAdapter
             mView.spn_class.setSelection(0)
+        })
+
+        mViewModel.getAddStudentStatus().observe(this, Observer {
+            Loader.hideLoader(activity!!.supportFragmentManager)
+            if (it == HelperViewModel.ADD_SUCCESS) {
+                Toast.makeText(context, "Them moi thanh cong", Toast.LENGTH_LONG)
+            } else {
+                Toast.makeText(context, "Them moi that bai", Toast.LENGTH_LONG)
+            }
         })
     }
 }

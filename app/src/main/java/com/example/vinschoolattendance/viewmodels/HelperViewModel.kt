@@ -15,6 +15,8 @@ class HelperViewModel : BaseViewModel() {
     companion object {
         val REGISTER_SUCCESS: Int = 1
         val REGISTER_FAIL: Int = 0
+        val ADD_SUCCESS: Int = 1
+        val ADD_FAIL: Int = 0
     }
 
     private var _listRoom: MutableLiveData<MutableList<RoomResponse>> = MutableLiveData()
@@ -27,6 +29,7 @@ class HelperViewModel : BaseViewModel() {
     private var _studentProfile: MutableLiveData<BaseProfile> = MutableLiveData()
 
     private var _registerScheduleStatus: MutableLiveData<Int> = MutableLiveData()
+    private var _addStudentStatus: MutableLiveData<Int> = MutableLiveData()
 
 
     fun getRoom() = _listRoom
@@ -47,7 +50,9 @@ class HelperViewModel : BaseViewModel() {
 
     fun getRegisterScheduleStatus() = _registerScheduleStatus
 
-    fun loadClass(){
+    fun getAddStudentStatus() = _addStudentStatus
+
+    fun loadClass() {
         //load class
         HelperRepository.fetchClass()
             .timeout(Network.NETWORK_CONNECT_TIME_OUT, TimeUnit.SECONDS)
@@ -58,6 +63,9 @@ class HelperViewModel : BaseViewModel() {
             }, this::onConnectError)
     }
 
+    /**
+     * lấy về danh sách các lớp học , phòng học, kì học, môn học,thời gian học
+     */
     fun loadResource() {
         //load subject
         HelperRepository.fetchSubject()
@@ -122,6 +130,9 @@ class HelperViewModel : BaseViewModel() {
             }, this::onConnectError)
     }
 
+    /**
+     * lấy về thông tin của giáo viên
+     * */
     fun loadTeacherProfile(id: Int) {
         HelperRepository.fetchTeacherInfo(id)
             .timeout(Network.NETWORK_CONNECT_TIME_OUT, TimeUnit.SECONDS)
@@ -132,6 +143,10 @@ class HelperViewModel : BaseViewModel() {
             }, this::onConnectError)
     }
 
+    /**
+     * đăng kí tiết học mới cho 1 lớp học
+     * @property scheduleReq: thông tin tiết học bao gồm :
+     * */
     fun registerSchedule(scheduleReq: ScheduleRegisterRequest) {
         HelperRepository.registerSchedule(scheduleReq)
             .timeout(Network.NETWORK_CONNECT_TIME_OUT, TimeUnit.SECONDS)
@@ -145,14 +160,21 @@ class HelperViewModel : BaseViewModel() {
             })
     }
 
-    fun addNewStudent(studentRequest: StudentRequest){
+    /**
+     * thêm mới một học sinh  cho 1 lớp
+     * @property studentRequest: thông tin một học sinh bao gồm:
+     * */
+    fun addNewStudent(studentRequest: StudentRequest) {
         HelperRepository.addNewStudent(studentRequest)
-            .timeout(Network.NETWORK_CONNECT_TIME_OUT,TimeUnit.SECONDS)
+            .timeout(Network.NETWORK_CONNECT_TIME_OUT, TimeUnit.SECONDS)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
-
-            },this::onConnectError)
+                _addStudentStatus.value = ADD_SUCCESS
+            }, {
+                this.onConnectError(it)
+                _addStudentStatus.value = ADD_FAIL
+            })
 
     }
 }

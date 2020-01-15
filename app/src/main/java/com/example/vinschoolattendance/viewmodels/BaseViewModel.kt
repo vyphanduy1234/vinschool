@@ -8,10 +8,13 @@ import com.example.vinschoolattendance.network.Network
 open class BaseViewModel: ViewModel() {
 
     protected var _internetStatus: MutableLiveData<Int> =
-        MutableLiveData(Network.NETWORK_CONNECT_OK)
+        MutableLiveData()
 
     fun getInternetStatus(): LiveData<Int> = _internetStatus
 
+    /**
+     * xử lý lỗi kết nối quá thời gian
+     * */
     fun onConnectError(error: Throwable?){
         _internetStatus.value = Network.NETWORK_CONNECT_ERROR
     }

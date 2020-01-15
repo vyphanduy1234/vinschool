@@ -29,6 +29,9 @@ class StudentViewModel : BaseViewModel() {
 
     fun getStudentTakeAttendStatus() = _studentTakeAttendStatus
 
+    /**
+     * lấy về thời khóa biêủ của sinh viên
+     * */
     fun loadStudentSchedule(sid:Int,date: String) {
          StudentRepository.fetchStudentSchedule(sid,date)
              .timeout(Network.NETWORK_CONNECT_TIME_OUT, TimeUnit.SECONDS)
@@ -40,6 +43,9 @@ class StudentViewModel : BaseViewModel() {
              },this::onConnectError)
     }
 
+    /**
+     * điểm danh cho sinh viên
+     * */
     fun takeAttendance(sid: Int, scheduleId: Int){
         StudentRepository.takeAttendance(sid,scheduleId)
             .timeout(Network.NETWORK_CONNECT_TIME_OUT,TimeUnit.SECONDS)

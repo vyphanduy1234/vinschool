@@ -18,9 +18,10 @@ import kotlinx.android.synthetic.main.activity_teacher_take_attendace.*
 
 class TeacherTakeAttendanceActivity : AppCompatActivity(), IBaseView {
 
-    val TAG: String = "MainActivity"
     val player: MediaPlayer = MediaPlayer()
+
     var scheduleID: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_teacher_take_attendace)
@@ -36,6 +37,7 @@ class TeacherTakeAttendanceActivity : AppCompatActivity(), IBaseView {
                 tv_time_notify.text = "QR will be shown in"
                 btn_take.isEnabled = false
                 tv_timer.visibility = View.VISIBLE
+
                 val takeAttendanceTimmer = object : CountDownTimer(50000, 1000) {
                     override fun onTick(p0: Long) {
                         val time = p0 / 1000

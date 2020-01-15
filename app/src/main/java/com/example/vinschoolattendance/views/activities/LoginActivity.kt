@@ -3,21 +3,28 @@ package com.example.vinschoolattendance
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.vinschoolattendance.models.pojos.LoginRequest
+import com.example.vinschoolattendance.utils.Loader
 import com.example.vinschoolattendance.viewmodels.LoginViewModel
 import com.example.vinschoolattendance.views.base.IBaseView
+import com.roger.catloadinglibrary.CatLoadingView
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.layout_login.*
 import kotlinx.android.synthetic.main.layout_register.*
 import java.util.regex.Pattern
 
 class LoginActivity : AppCompatActivity(), IBaseView {
+
     private val TAG = "LoginActivity"
+
     lateinit var mViewModel: LoginViewModel
+
     private var loginViewModel: LoginViewModel? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -28,23 +35,29 @@ class LoginActivity : AppCompatActivity(), IBaseView {
     override fun setUpViewModel() {
         mViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
 
+        //nếu là học sinh đăng nhập thì chuyển sang màn học sinh
         mViewModel.isStudentLogin().observe(this, Observer {
+            Loader.hideLoader(fragmentManager = supportFragmentManager)
             val intent = Intent(this@LoginActivity, StudentActivity::class.java)
             startActivity(intent)
         })
 
+        //nếu là giáo viên đăng nhập thì chuyển sang màn giáo viên
         mViewModel.isTeacherLogin().observe(this, Observer {
+            Loader.hideLoader(fragmentManager = supportFragmentManager)
             val intent = Intent(this@LoginActivity, TeacherActivity::class.java)
             startActivity(intent)
         })
 
+        // lắng nghe sự kiện đăng nhập thành công hay thất bại
         mViewModel.getLoginStatus().observe(this, Observer {
             when (it) {
                 LoginViewModel.LOGIN_SUCCESS -> {
 
                 }
                 LoginViewModel.LOGIN_FAIL -> {
-
+                    Loader.hideLoader(fragmentManager = supportFragmentManager)
+                    Toast.makeText(this,"Login fail",Toast.LENGTH_LONG).show()
                 }
             }
         })
@@ -56,6 +69,7 @@ class LoginActivity : AppCompatActivity(), IBaseView {
         btn_login.setOnClickListener {
             if (!tv_email.text.toString().equals("") && !tv_password.toString().equals("")
             ) {
+                Loader.showLoader(fragmentManager = supportFragmentManager)
                 mViewModel.login(
                     LoginRequest(
                         tv_email.text.toString(),

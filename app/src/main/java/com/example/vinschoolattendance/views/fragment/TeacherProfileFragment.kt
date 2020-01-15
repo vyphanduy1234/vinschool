@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 
 import com.example.vinschoolattendance.R
 import com.example.vinschoolattendance.databinding.FragmentTeacherProfileBinding
+import com.example.vinschoolattendance.utils.UserAuthen
 import com.example.vinschoolattendance.viewmodels.HelperViewModel
 import com.example.vinschoolattendance.views.base.IBaseView
 
@@ -21,8 +22,11 @@ import com.example.vinschoolattendance.views.base.IBaseView
 class TeacherProfileFragment : Fragment(),IBaseView {
 
     lateinit var mViewModel: HelperViewModel
+
     lateinit var mView: View
+
     lateinit var mBinding: FragmentTeacherProfileBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,7 +44,7 @@ class TeacherProfileFragment : Fragment(),IBaseView {
     override fun setUpViewModel() {
         mViewModel = ViewModelProviders.of(this).get(HelperViewModel::class.java)
 
-        mViewModel.loadTeacherProfile(1)
+        mViewModel.loadTeacherProfile(UserAuthen.ID)
         mViewModel.getTeacherProfile().observe(this, Observer {
             mBinding.viewmodel = it
         })

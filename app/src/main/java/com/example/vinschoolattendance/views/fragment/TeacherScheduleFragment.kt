@@ -22,6 +22,7 @@ import com.example.vinschoolattendance.adapters.TeacherScheduleAdapter
 import com.example.vinschoolattendance.models.entities.TeacherSchedule
 import com.example.vinschoolattendance.network.Network
 import com.example.vinschoolattendance.utils.DateTime
+import com.example.vinschoolattendance.utils.Loader
 import com.example.vinschoolattendance.utils.UserAuthen
 import com.example.vinschoolattendance.viewmodels.TeacherViewModel
 import com.example.vinschoolattendance.views.activities.ClassAttendanceActivity
@@ -38,22 +39,27 @@ class TeacherScheduleFragment : Fragment(), IBaseView,
     TeacherScheduleAdapter.TeacherScheduleListener {
 
     lateinit var mRecyclerView: RecyclerView
+
     lateinit var mTeacherScheduleAdapter: TeacherScheduleAdapter
+
     lateinit var mViewModel: TeacherViewModel
-    lateinit var mProgressBar: ProgressBar
+
     lateinit var tvErrorLoading: TextView
+
     lateinit var tvNoData: TextView
+
     lateinit var mView: View
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_teacher_schedule, container, false)
-        mProgressBar = mView.findViewById(R.id.progress_bar)
         tvErrorLoading = mView.findViewById(R.id.tv_internet_error)
         tvNoData = mView.findViewById(R.id.tv_no_data)
-        mProgressBar.visibility = View.VISIBLE
+
+        Loader.showLoader(activity!!.supportFragmentManager)
         tvErrorLoading.visibility = View.INVISIBLE
         tvNoData.visibility = View.INVISIBLE
 
@@ -90,9 +96,9 @@ class TeacherScheduleFragment : Fragment(), IBaseView,
                 context,
                 DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
                     val date = DateTime.NormalizeDate(year, month, day)
-                    mViewModel.loadTeacherSchedule(UserAuthen.ID,date)
+                    mViewModel.loadTeacherSchedule(UserAuthen.ID, date)
                     tvNoData.visibility = View.INVISIBLE
-                    progress_bar.visibility = View.VISIBLE
+                    Loader.showLoader(activity!!.supportFragmentManager)
                 }, year, month, day
             )
             datePickerDialog.show()
@@ -103,22 +109,22 @@ class TeacherScheduleFragment : Fragment(), IBaseView,
 
         mViewModel = ViewModelProviders.of(this).get(TeacherViewModel::class.java)
         val today: String = DateTime.getDateToday()
-        mViewModel.loadTeacherSchedule(UserAuthen.ID,today)
+        mViewModel.loadTeacherSchedule(UserAuthen.ID, today)
         val observer: Observer<MutableList<TeacherSchedule>> =
             Observer<MutableList<TeacherSchedule>> { teacherSchedule ->
-                if(teacherSchedule.size == 0){
+                if (teacherSchedule.size == 0) {
                     tvNoData.visibility = View.VISIBLE
                 }
                 mTeacherScheduleAdapter.listSchedule = teacherSchedule
                 mTeacherScheduleAdapter.notifyDataSetChanged()
-                progress_bar.visibility = View.GONE
+                Loader.hideLoader(activity!!.supportFragmentManager)
             }
         mViewModel.getTeacherSchedule().observe(this, observer)
 
         mViewModel.getInternetStatus().observe(this, Observer<Int> { error ->
             if (error == Network.NETWORK_CONNECT_ERROR) {
                 tvNoData.visibility = View.INVISIBLE
-                progress_bar.visibility = View.GONE
+                Loader.hideLoader(activity!!.supportFragmentManager)
                 tvErrorLoading.visibility = View.VISIBLE
             } else {
                 tvErrorLoading.visibility = View.INVISIBLE
