@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.vinschoolattendance.R
@@ -164,11 +161,13 @@ class TeacherAddScheduleFragment : Fragment(), IBaseView {
         mViewodel.getRegisterScheduleStatus().observe(this, Observer {
             Loader.hideLoader(activity!!.supportFragmentManager)
             if(it == HelperViewModel.REGISTER_SUCCESS){
-                mTvRegisterFail.visibility = View.INVISIBLE
-                mTvRegisterSuccess.visibility = View.VISIBLE
+                Toast.makeText(context,"Thêm thành công!!",Toast.LENGTH_LONG).show()
+//                mTvRegisterFail.visibility = View.INVISIBLE
+//                mTvRegisterSuccess.visibility = View.VISIBLE
             }else{
-                mTvRegisterFail.visibility = View.VISIBLE
-                mTvRegisterSuccess.visibility = View.INVISIBLE
+                Toast.makeText(context,"Thêm thất bại!!",Toast.LENGTH_LONG).show()
+//                mTvRegisterFail.visibility = View.VISIBLE
+//                mTvRegisterSuccess.visibility = View.INVISIBLE
             }
         })
     }
