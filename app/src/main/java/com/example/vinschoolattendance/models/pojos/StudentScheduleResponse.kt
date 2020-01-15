@@ -72,6 +72,7 @@ class StudentScheduleResponse {
         sc.friendAttends = listStudentAttend
         sc.date = this.date
         sc.timeStart = this.timeStart
+        sc.room = this.room
         return sc
     }
 }

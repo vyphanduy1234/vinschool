@@ -2,6 +2,7 @@ package com.example.vinschoolattendance.repositories
 
 import com.appsnipp.creativelogindesigns.api.ApiUtils
 import com.example.vinschoolattendance.models.entities.StudentOfClass
+import com.example.vinschoolattendance.network.Header
 import io.reactivex.Observable
 
 object ClassAttendanceRepository {
@@ -12,7 +13,7 @@ object ClassAttendanceRepository {
      * @return một đối tượng observable của 1 list các học sinh của 1 lớp hoc
      * */
     fun fetchClassAttendance(scheduleId: Int): Observable<MutableList<StudentOfClass>> {
-        return ApiUtils.getApiService().getAttendanceOfClass(scheduleId)
+        return ApiUtils.getApiService().getAttendanceOfClass(Header.header,scheduleId)
             .map {
                 it.map {
                     it.toStudentOfClass(scheduleId)

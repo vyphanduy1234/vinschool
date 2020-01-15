@@ -77,9 +77,9 @@ class TeacherAddStudentFragment : Fragment(), IBaseView {
         mViewModel.getAddStudentStatus().observe(this, Observer {
             Loader.hideLoader(activity!!.supportFragmentManager)
             if (it == HelperViewModel.ADD_SUCCESS) {
-                Toast.makeText(context, "Them moi thanh cong", Toast.LENGTH_LONG)
+                Toast.makeText(context, "Them moi thanh cong", Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(context, "Them moi that bai", Toast.LENGTH_LONG)
+                Toast.makeText(context, "Them moi that bai", Toast.LENGTH_LONG).show()
             }
         })
     }

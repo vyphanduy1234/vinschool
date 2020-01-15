@@ -156,7 +156,7 @@ class HelperViewModel : BaseViewModel() {
                 _registerScheduleStatus.value = REGISTER_SUCCESS
             }, {
                 this.onConnectError(it)
-                _registerScheduleStatus.value = REGISTER_FAIL
+                //_registerScheduleStatus.value = REGISTER_FAIL
             })
     }
 

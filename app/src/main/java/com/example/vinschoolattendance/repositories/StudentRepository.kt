@@ -29,7 +29,7 @@ object StudentRepository {
      * */
      fun  takeAttendance(sid: Int, scheduleId: Int): Completable{
         val service: ApiServices = ApiUtils.getApiService()
-        return service.takeAttendanceForStudent(sid, scheduleId)
+        return service.takeAttendanceForStudent(Header.header, scheduleId)
     }
 
 //    open fun fakeStudentSchedule(){

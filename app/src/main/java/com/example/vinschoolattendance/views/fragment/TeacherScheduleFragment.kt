@@ -130,6 +130,14 @@ class TeacherScheduleFragment : Fragment(), IBaseView,
                 tvErrorLoading.visibility = View.INVISIBLE
             }
         })
+        mViewModel.getRecordStatus().observe(this, Observer {
+            when (it) {
+                Network.NOT_FOUND -> {
+                    Loader.hideLoader(activity!!.supportFragmentManager)
+                    Toast.makeText(context,"No record found",Toast.LENGTH_LONG).show()
+                }
+            }
+        })
     }
 
     override fun onEditClassAttendance(scheduleId: Int) {

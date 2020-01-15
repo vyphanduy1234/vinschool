@@ -32,8 +32,8 @@ interface ApiServices {
     * @property header: lưu token của giáo viên
     * */
     //add header
-    @GET("/api/teacher/schedule/{tid}")
-    fun getTeacherSchedule(@Path("tid") tid: Int, @Query("date") date: String): Observable<MutableList<TeacherScheduleResponse>>
+    @GET("/api/teacher/schedule/")
+    fun getTeacherSchedule(@HeaderMap headers: Map<String, String> , @Query("date") date: String): Observable<MutableList<TeacherScheduleResponse>>
 
 
     /**
@@ -41,29 +41,29 @@ interface ApiServices {
     * @property scheduleId: mã thời khóa biểu
     * */
     @GET("/api/teacher/attendance/{scheduleId}")
-    fun getAttendanceOfClass(@Path("scheduleId") scheduleId: Int): Observable<MutableList<ClassAttendanceResponse>>
+    fun getAttendanceOfClass(@HeaderMap headers: Map<String,String>,@Path("scheduleId") scheduleId: Int): Observable<MutableList<ClassAttendanceResponse>>
 
     /**
     * lấy thông tin của sinh viên
     * */
     //add header
-    @GET("/api/student/info/{uid}")
-    fun getStudentInfo(@Path("uid") uid: Int): Observable<BaseProfile>
+    @GET("/api/student/info/")
+    fun getStudentInfo(@HeaderMap headers: Map<String, String>): Observable<BaseProfile>
 
     /**
     * lấy thông tin của giáo viên
     * */
     //add header
-    @GET("/api/teacher/info/{uid}")
-    fun getTeacherInfo(@Path("uid") uid: Int): Observable<BaseProfile>
+    @GET("/api/teacher/info/")
+    fun getTeacherInfo(@HeaderMap headers: Map<String, String> ): Observable<BaseProfile>
 
     /**
     * sinh viên điểm danh theo mã thời khóa biểu
     * @property scheduleId: mã thời khóa biểu
     * */
     //add header
-    @PUT("/api/student/attendance/{id}")
-    fun takeAttendanceForStudent(@Path("id") id: Int,@Query("schedule_id") scheduleId: Int): Completable
+    @PUT("/api/student/attendance/")
+    fun takeAttendanceForStudent(@HeaderMap headers: Map<String, String> ,@Query("schedule_id") scheduleId: Int): Completable
 
     /**
     * giáo viên chỉnh sửa điểm danh cho sinh viên
@@ -72,7 +72,8 @@ interface ApiServices {
     * */
     //add header
     @PUT("/api/teacher/take-attendance/{id}")
-    fun editAttendanceForStudent(@Path("id") id: Int
+    fun editAttendanceForStudent(@HeaderMap headers: Map<String,String>
+                                 ,@Path("id") id: Int
                                  ,@Query("scheduleId") scheduleId: Int,
                                  @Query("isPresent") isPresent: Boolean): Completable
 
@@ -80,9 +81,10 @@ interface ApiServices {
     * giáo viên đăng kí 1 tiết học cho 1 lớp
     * @property scheduleReq: thông tin 1 tiết học gồm có :
     * */
-    @POST("/api/teacher")
+    @POST("/api/teacher/createSchedule")
     @Headers("Content-Type: application/json")
-    fun registerSchedule(@Body scheduleReq: ScheduleRegisterRequest): Completable
+    fun registerSchedule(@HeaderMap headers: Map<String,String>
+                         ,@Body scheduleReq: ScheduleRegisterRequest): Completable
 
     /**
     * giáo viên thêm mới một sinh viên
@@ -90,42 +92,43 @@ interface ApiServices {
     * */
     @POST("/api/teacher/createUser")
     @Headers("Content-Type: application/json")
-    fun addNewStudent(@Body studentRequest: StudentRequest): Completable
+    fun addNewStudent(@HeaderMap headers: Map<String,String>,
+                      @Body studentRequest: StudentRequest): Completable
 
     /**
     * lấy ra thông tin các lớp học
     * */
     @GET("/api/teacher/getAllClassInfo")
-    fun getAllClass(): Observable<MutableList<ClassResponse>>
+    fun getAllClass(@HeaderMap headers: Map<String,String>): Observable<MutableList<ClassResponse>>
 
     /**
     * lấy ra thông tin các lớp học
     * */
     @GET("/api/teacher/getAllRoomInfo")
-    fun getAllRoom(): Observable<MutableList<RoomResponse>>
+    fun getAllRoom(@HeaderMap headers: Map<String,String>): Observable<MutableList<RoomResponse>>
 
     /**
     * lấy ra thông tin các kì học
     * */
     @GET("/api/teacher/getAllTermInfo")
-    fun getAllTerm(): Observable<MutableList<TermResponse>>
+    fun getAllTerm(@HeaderMap headers: Map<String,String>): Observable<MutableList<TermResponse>>
 
     /**
     * lấy ra thông tin các môn học
     * */
     @GET("/api/teacher/getAllSubjectInfo")
-    fun getAllSubject(): Observable<MutableList<SubjectResponse>>
+    fun getAllSubject(@HeaderMap headers: Map<String,String>): Observable<MutableList<SubjectResponse>>
 
     /**
     * lấy ra thông tin các giáo viên
     * */
     @GET("/api/teacher/getAllTeacherInfo")
-    fun getAllTeacher(): Observable<MutableList<TeacherResponse>>
+    fun getAllTeacher(@HeaderMap headers: Map<String,String>): Observable<MutableList<TeacherResponse>>
 
     /**
     * lấy ra thông tin các thời gian học
     * */
     @GET("/api/teacher/getAllCategoryInfo")
-    fun getAllSlot(): Observable<MutableList<SlotResponse>>
+    fun getAllSlot(@HeaderMap headers: Map<String,String>): Observable<MutableList<SlotResponse>>
 
 }

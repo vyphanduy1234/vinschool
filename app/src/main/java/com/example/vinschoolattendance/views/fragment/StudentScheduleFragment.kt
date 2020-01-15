@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -118,6 +119,15 @@ class StudentScheduleFragment : Fragment(), IBaseView {
             } else {
                 Loader.hideLoader(activity!!.supportFragmentManager)
                 tvErrorLoading.visibility = View.INVISIBLE
+            }
+        })
+
+        mStudentViewModel.getRecordStatus().observe(this, Observer {
+            when (it) {
+                Network.NOT_FOUND -> {
+                    Loader.hideLoader(activity!!.supportFragmentManager)
+                    Toast.makeText(context,"No record found", Toast.LENGTH_LONG).show()
+                }
             }
         })
     }

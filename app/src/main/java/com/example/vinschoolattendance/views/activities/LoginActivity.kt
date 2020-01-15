@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.vinschoolattendance.models.pojos.LoginRequest
+import com.example.vinschoolattendance.network.Network
 import com.example.vinschoolattendance.utils.Loader
 import com.example.vinschoolattendance.viewmodels.LoginViewModel
 import com.example.vinschoolattendance.views.base.IBaseView
@@ -50,16 +51,22 @@ class LoginActivity : AppCompatActivity(), IBaseView {
         })
 
         // lắng nghe sự kiện đăng nhập thành công hay thất bại
-        mViewModel.getLoginStatus().observe(this, Observer {
+        mViewModel.getInternetStatus().observe(this, Observer {
             when (it) {
-                LoginViewModel.LOGIN_SUCCESS -> {
-
-                }
-                LoginViewModel.LOGIN_FAIL -> {
-                    Loader.hideLoader(fragmentManager = supportFragmentManager)
-                    Toast.makeText(this,"Login fail",Toast.LENGTH_LONG).show()
+                Network.NETWORK_CONNECT_ERROR -> {
+                    Loader.hideLoader(supportFragmentManager)
+                    Toast.makeText(this,"Login time out!!",Toast.LENGTH_LONG).show()
                 }
             }
+        })
+
+            mViewModel.getRecordStatus().observe(this, Observer {
+                when (it) {
+                    Network.NOT_FOUND -> {
+                        Loader.hideLoader(supportFragmentManager)
+                        Toast.makeText(this,"Wrong username or password!",Toast.LENGTH_LONG).show()
+                    }
+                }
         })
     }
 
@@ -67,7 +74,7 @@ class LoginActivity : AppCompatActivity(), IBaseView {
         //event
         //login event
         btn_login.setOnClickListener {
-            if (!tv_email.text.toString().equals("") && !tv_password.toString().equals("")
+            if (!tv_email.text.toString().equals("") && !tv_password.text.toString().equals("")
             ) {
                 Loader.showLoader(fragmentManager = supportFragmentManager)
                 mViewModel.login(

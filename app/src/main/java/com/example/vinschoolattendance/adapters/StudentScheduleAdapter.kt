@@ -38,7 +38,7 @@ class StudentScheduleAdapter(var listSchedule: MutableList<StudentSchedule>, var
     override fun onBindViewHolder(holder: StudentScheduleViewHolder, position: Int) {
         val studentSchedule = listSchedule[position]
 
-        holder.itemView.tv_time_minute.text =
+        holder.itemView.tv_time_hour.text =
             if (studentSchedule.timeStartHour.toString().length == 1)
                 "0" + studentSchedule.timeStartHour.toString()
             else
@@ -61,16 +61,16 @@ class StudentScheduleAdapter(var listSchedule: MutableList<StudentSchedule>, var
             }
         }
         holder.itemView.tv_class.text = "Class: " + studentSchedule.cclass
+
         if(ScheduleStatus.canTakeAttend(studentSchedule.timeStart,studentSchedule.date)){
             holder.itemView.btn_student_take_attend.setOnClickListener {
                 val intent: Intent = Intent(context, StudentTakeAttendanceActivity::class.java)
                 context.startActivity(intent)
             }
         }else{
-            holder.itemView.btn_student_take_attend.text = "Started"
+            holder.itemView.btn_student_take_attend.text = "Not allow"
             holder.itemView.btn_student_take_attend.isEnabled = false
         }
-
         loadImageStudentAttend(holder, studentSchedule)
     }
 

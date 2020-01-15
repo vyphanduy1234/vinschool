@@ -62,7 +62,6 @@ class LoginViewModel: BaseViewModel() {
                 _loginStatus.value = LOGIN_SUCCESS
             },{
                 this.onConnectError(it)
-                _loginStatus.value = LOGIN_FAIL
             })
     }
 }

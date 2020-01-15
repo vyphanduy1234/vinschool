@@ -3,6 +3,7 @@ package com.example.vinschoolattendance.views.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -83,6 +84,14 @@ class ClassAttendanceActivity : AppCompatActivity(), IBaseView,
             } else {
                 tv_internet_error.visibility = View.INVISIBLE
             }
+        })
+
+        mViewModel.getUpdateAttendOfStudentStatus().observe(this, Observer<Int> {
+           if(it == ClassAttendaceViewModel.UPDATE_SUCCESS){
+               Toast.makeText(this,"update success!!",Toast.LENGTH_SHORT).show()
+           }else{
+               Toast.makeText(this,"update fail!!",Toast.LENGTH_SHORT).show()
+           }
         })
     }
 }

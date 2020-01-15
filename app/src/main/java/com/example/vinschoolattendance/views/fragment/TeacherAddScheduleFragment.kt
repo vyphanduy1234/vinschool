@@ -14,6 +14,7 @@ import com.example.vinschoolattendance.viewmodels.HelperViewModel
 import com.example.vinschoolattendance.views.base.IBaseView
 import androidx.lifecycle.Observer
 import com.example.vinschoolattendance.models.pojos.*
+import com.example.vinschoolattendance.network.Network
 import com.example.vinschoolattendance.utils.DateTime
 import com.example.vinschoolattendance.utils.Loader
 import kotlinx.android.synthetic.main.activity_teacher_take_attendace.*
@@ -98,6 +99,15 @@ class TeacherAddScheduleFragment : Fragment(), IBaseView {
         mViewodel = ViewModelProviders.of(this).get(HelperViewModel::class.java)
         mViewodel.loadResource()
 
+        mViewodel.getRecordStatus().observe(this, Observer {
+            when (it) {
+                Network.BAD_REQUEST -> {
+                    Loader.hideLoader(activity!!.supportFragmentManager)
+                    Toast.makeText(context,"Date is invalid",Toast.LENGTH_LONG).show()
+                }
+            }
+        })
+
         mViewodel.getClass().observe(this, Observer {
             mClassAdapter = ArrayAdapter<ClassResponse>(
                 context
@@ -164,11 +174,14 @@ class TeacherAddScheduleFragment : Fragment(), IBaseView {
                 Toast.makeText(context,"Thêm thành công!!",Toast.LENGTH_LONG).show()
 //                mTvRegisterFail.visibility = View.INVISIBLE
 //                mTvRegisterSuccess.visibility = View.VISIBLE
-            }else{
-                Toast.makeText(context,"Thêm thất bại!!",Toast.LENGTH_LONG).show()
-//                mTvRegisterFail.visibility = View.VISIBLE
-//                mTvRegisterSuccess.visibility = View.INVISIBLE
             }
+        })
+
+        mViewodel.getInternetStatus().observe(this, Observer {
+            Loader.hideLoader(activity!!.supportFragmentManager)
+                Toast.makeText(context,"Thêm thất bại, time out!!",Toast.LENGTH_LONG).show()
+//                mTvRegisterFail.visibility = View.INVISIBLE
+//                mTvRegisterSuccess.visibility = View.VISIBLE
         })
     }
 

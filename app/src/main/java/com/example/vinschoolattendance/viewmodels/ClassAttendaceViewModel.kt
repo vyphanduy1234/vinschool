@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.appsnipp.creativelogindesigns.api.ApiUtils
 import com.example.vinschoolattendance.models.entities.StudentOfClass
 import com.example.vinschoolattendance.models.pojos.ClassAttendanceResponse
+import com.example.vinschoolattendance.network.Header
 import com.example.vinschoolattendance.repositories.ClassAttendanceRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -24,6 +25,8 @@ class ClassAttendaceViewModel : BaseViewModel() {
 
     private var _updateAttendOfStudentStatus: MutableLiveData<Int> = MutableLiveData()
     fun getListClassAttendance() = _listClassAttendance
+
+    fun getUpdateAttendOfStudentStatus() = _updateAttendOfStudentStatus
 
     /**
      * lấy ra danh sách các sinh viên của 1 lớp theo mã thời khóa biểu
@@ -49,7 +52,7 @@ class ClassAttendaceViewModel : BaseViewModel() {
      * @property isPresent: trạng thái điểm danh
      * */
     fun editStudentAttend(sid: Int, scheduleId: Int,isPresent: Boolean){
-        ApiUtils.getApiService().editAttendanceForStudent(sid,scheduleId,isPresent)
+        ApiUtils.getApiService().editAttendanceForStudent(Header.header,sid,scheduleId,isPresent)
             .timeout(Network.NETWORK_CONNECT_TIME_OUT,TimeUnit.SECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

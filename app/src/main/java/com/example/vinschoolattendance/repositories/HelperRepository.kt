@@ -4,6 +4,7 @@ import com.appsnipp.creativelogindesigns.api.ApiServices
 import com.appsnipp.creativelogindesigns.api.ApiUtils
 import com.example.vinschoolattendance.models.base.BaseProfile
 import com.example.vinschoolattendance.models.pojos.*
+import com.example.vinschoolattendance.network.Header
 import io.reactivex.Completable
 import io.reactivex.Observable
 
@@ -15,7 +16,7 @@ object HelperRepository {
      * @return một đối tượng observable của 1 list các môn học
      * */
     fun fetchSubject(): Observable<MutableList<SubjectResponse>> {
-        return service.getAllSubject()
+        return service.getAllSubject(Header.header)
     }
 
     /**
@@ -23,7 +24,7 @@ object HelperRepository {
      * @return một đối tượng observable của 1 list các phòng học
      * */
     fun fetchRoom(): Observable<MutableList<RoomResponse>> {
-        return service.getAllRoom()
+        return service.getAllRoom(Header.header)
     }
 
     /**
@@ -31,7 +32,7 @@ object HelperRepository {
      * @return một đối tượng observable của 1 list các lớp học
      * */
     fun fetchClass(): Observable<MutableList<ClassResponse>> {
-        return service.getAllClass()
+        return service.getAllClass(Header.header)
     }
 
     /**
@@ -39,7 +40,7 @@ object HelperRepository {
      * @return một đối tượng observable của 1 list các kì học
      * */
     fun fetchTerm(): Observable<MutableList<TermResponse>> {
-        return service.getAllTerm()
+        return service.getAllTerm(Header.header)
     }
 
     /**
@@ -47,7 +48,7 @@ object HelperRepository {
      * @return một đối tượng observable của 1 list các giáo viên
      * */
     fun fetchTeacher(): Observable<MutableList<TeacherResponse>> {
-        return service.getAllTeacher()
+        return service.getAllTeacher(Header.header)
     }
 
     /**
@@ -55,7 +56,7 @@ object HelperRepository {
      * @return một đối tượng observable của 1 list các khoảng thời gian học
      * */
     fun fetchSlot(): Observable<MutableList<SlotResponse>> {
-        return service.getAllSlot()
+        return service.getAllSlot(Header.header)
     }
 
     /**
@@ -63,7 +64,7 @@ object HelperRepository {
      * @return một đối tượng observable của thông tin học sinh
      * */
     fun fetchStudentInfo(sid: Int): Observable<BaseProfile>{
-        return service.getStudentInfo(sid)
+        return service.getStudentInfo(Header.header)
     }
 
     /**
@@ -71,21 +72,21 @@ object HelperRepository {
      * @return một đối tượng observable của thông tin giáo viên
      * */
     fun fetchTeacherInfo(tid: Int): Observable<BaseProfile>{
-        return service.getTeacherInfo(tid)
+        return service.getTeacherInfo(Header.header)
     }
 
     /**
      * thêm mới một tiết học lên db server
      * */
     fun registerSchedule(scheduleReq: ScheduleRegisterRequest): Completable{
-        return service.registerSchedule(scheduleReq)
+        return service.registerSchedule(Header.header,scheduleReq)
     }
 
     /**
      * thêm mới một hoc sinh lên db server
      * */
     fun addNewStudent(studentRequest: StudentRequest): Completable{
-        return service.addNewStudent(studentRequest)
+        return service.addNewStudent(Header.header,studentRequest)
     }
 
 }
