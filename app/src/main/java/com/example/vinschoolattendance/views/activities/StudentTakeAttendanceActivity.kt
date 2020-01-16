@@ -177,7 +177,7 @@ class StudentTakeAttendanceActivity : AppCompatActivity(), ZXingScannerView.Resu
         Log.d("QRCodeScanner", result.text)
         Log.d("QRCodeScanner", result.barcodeFormat.toString())
         setUpViewModel()
-        mViewModel.takeAttendance(3, 4)
+        mViewModel.takeAttendance(1,mScheduleId)
     }
 
     companion object {

@@ -7,12 +7,12 @@
 <!--        app:cnb_iconColor="@color/colorPrimaryDark" />-->
     <item
         android:id="@+id/s_schedule"
-        android:icon="@drawable/right_tick"
+        android:icon="@drawable/icon_class"
         android:title="Schedule"
         app:cnb_iconColor="@color/colorAccent" />
     <item
         android:id="@+id/s_profile"
-        android:icon="@drawable/right_tick"
+        android:icon="@drawable/icon_age"
         android:title="Profile"
         app:cnb_iconColor="@color/colorPrimaryDark" />
 </menu>

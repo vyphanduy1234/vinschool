@@ -31,6 +31,8 @@ open class BaseViewModel: ViewModel() {
             }else{
                 _internetStatus.value = Network.NETWORK_CONNECT_ERROR
             }
+        }else{
+            _internetStatus.value = Network.NETWORK_CONNECT_ERROR
         }
     }
 }

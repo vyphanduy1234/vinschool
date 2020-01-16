@@ -29,7 +29,7 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:layout_weight="1"
-        android:background="#000"
+        android:background="#34a1eb"
         android:gravity="center"
         app:cnb_menuResource="@menu/teacher_bottom_menu" />
 
